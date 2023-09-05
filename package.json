@@ -1,0 +1,31 @@
+{
+  "name": "frontend_valhalla",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaderM28/FrontEnd_Valhalla.git"
+  },
+  "keywords": [
+    "frontend",
+    "valhalla"
+  ],
+  "author": "Jader Montoya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JaderM28/FrontEnd_Valhalla/issues"
+  },
+  "homepage": "https://github.com/JaderM28/FrontEnd_Valhalla#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

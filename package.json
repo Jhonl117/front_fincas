@@ -17,6 +17,9 @@
   ],
   "author": "Jader Montoya",
   "license": "MIT",
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "bugs": {
     "url": "https://github.com/JaderM28/FrontEnd_Valhalla/issues"
   },

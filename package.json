@@ -17,13 +17,16 @@
   ],
   "author": "Jader Montoya",
   "license": "MIT",
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "bugs": {
     "url": "https://github.com/JaderM28/FrontEnd_Valhalla/issues"
   },
   "homepage": "https://github.com/JaderM28/FrontEnd_Valhalla#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "express-handlebars": "^7.1.2",
+    "express-handlebars": "^6.0.6",
     "path": "^0.12.7"
   },
   "devDependencies": {

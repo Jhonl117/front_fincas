@@ -40,16 +40,13 @@ router.get('/listarClientes', (req, res) => {
     res.render('clientes/listarClientes')
 })
 
-router.get('/crearCliente', (req, res) => {
-    res.render('clientes/formClientes')
-})
 
 
 // ================================= \\
 // Rutas Empleado
 
-router.get('/empleados', (req, res) => {
-    res.render('empleados')
+router.get('/listarEmpleados', (req, res) => {
+    res.render('empleados/listarEmpleados')
 })
 
 

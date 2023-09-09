@@ -51,6 +51,28 @@ router.get('/listarEmpleados', (req, res) => {
 
 
 // ================================= \\
+// Rutas Categorias
+
+router.get('/listarCategorias', (req, res) => {
+    res.render('categorias/listarCategorias')
+})
+
+router.get('/crearCategorias', (req, res) => {
+    res.render('categorias/formCategorias')
+})
+
+// ================================= \\
+// Rutas Servicios
+
+router.get('/listarServicios', (req, res) => {
+    res.render('servicios/listarServicios')
+})
+
+router.get('/crearServicios', (req, res) => {
+    res.render('servicios/formServicios')
+})
+
+// ================================= \\
 // Ruta Error
 
 router.get('*', (req, res) => {

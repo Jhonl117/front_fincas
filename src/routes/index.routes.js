@@ -17,7 +17,9 @@ router.get('/register', (req, res) => {
 })
 
 router.get('/', (req, res) => {
-    res.render('index')
+    res.render('index', {
+        dasboard: true
+    })
 })
 
 
@@ -25,11 +27,16 @@ router.get('/', (req, res) => {
 // Rutas Usuarios
 
 router.get('/listarUsuarios', (req, res) => {
-    res.render('usuarios/listarUsuarios')
+    res.render('usuarios/listarUsuarios', {
+        usuarioL: true,
+        usuarioR: true
+    })
 })
 
 router.get('/crearUsuario', (req, res) => {
-    res.render('usuarios/formUsuarios')
+    res.render('usuarios/formUsuarios', {
+        usuarioR: true
+    })
 })
 
 

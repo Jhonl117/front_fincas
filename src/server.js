@@ -30,6 +30,7 @@ app.set('view engine', '.hbs');
 // Estaticos
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'utils')));
 
 
 // ================================= \\

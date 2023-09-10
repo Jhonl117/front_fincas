@@ -1,3 +1,5 @@
+
+
 <!-- Container Fluid-->
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -20,7 +22,6 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <form>
-
                             <div class="form-row">
                                 <div class="form-group col-md-6 mb-4">
                                     <label>Nombres</label>
@@ -28,7 +29,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Nombres Completos">
+                                        <input type="text" id="txtNombres" class="form-control" placeholder="Nombres Completos">
+                                        <div class="invalid-feedback" id="txtNombresError"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-4">
@@ -37,7 +39,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Apellidos Completos">
+                                        <input type="text" id="txtApellidos" class="form-control" placeholder="Apellidos Completos">
+                                        <div class="invalid-feedback" id="txtApellidosError"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-4">
@@ -46,8 +49,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
                                         </div>
-                                        <input type="email" class="form-control"
-                                            placeholder="Escribir Correo Electronico">
+                                        <input type="email" id="txtCorreo" class="form-control" placeholder="Escribir Correo Electronico">
+                                        <div class="invalid-feedback" id="txtCorreoError"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-4">
@@ -56,7 +59,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input type="email" class="form-control" placeholder="Escribir Nombre Usuario">
+                                        <input type="text" id="txtUsername" class="form-control" placeholder="Escribir Nombre Usuario">
+                                        <div class="invalid-feedback" id="txtUsernameError"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-4">
@@ -65,8 +69,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone-square"></i></span>
                                         </div>
-                                        <input type="password" class="form-control"
-                                            placeholder="Escribir Telefono Movil">
+                                        <input type="text" id="txtTelefono" class="form-control" placeholder="Escribir Telefono Movil">
+                                        <div class="invalid-feedback" id="txtTelefonoError"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-4">
@@ -75,12 +79,13 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                                         </div>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Seleccionar Rol</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                            <option>Option 3</option>
+                                        <select id="selRol" class="form-control">
+                                            <option value="disabled" selected>Seleccionar Rol</option>
+                                            <option value="Usuario">Usuario</option>
+                                            <option value="Empleado">Empleado</option>
+                                            <option value="Administrador">Administrador</option>
                                         </select>
+                                        <div class="invalid-feedback" id="selRolError"></div>
                                     </div>
 
                                 </div>
@@ -90,7 +95,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></i></span>
                                         </div>
-                                        <input type="password" class="form-control" placeholder="Escribir Contraseña">
+                                        <input type="password" id="txtPassword" class="form-control" placeholder="Escribir Contraseña">
+                                        <div class="invalid-feedback" id="txtPasswordError"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-4">
@@ -99,18 +105,21 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></i></span>
                                         </div>
-                                        <input type="password" class="form-control"
-                                            placeholder="Escribir Contraseña Nuevamente">
+                                        <input type="password" id="txtPasswordRepeat" class="form-control" placeholder="Escribir Contraseña Nuevamente">
+                                        <div class="invalid-feedback" id="txtPasswordRepeatError"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="text-center mt-5">
-                                <button type="submit" class="btn-sm btn-success mx-2"><i
-                                        class="fas fa-check-square mr-2"></i>Guardar</button>
-                                <button type="submit" class="btn-sm btn-danger mx-2"><i
-                                        class="fas fa-times-circle mr-2"></i>Cancelar</button>
-                                <button type="submit" class="btn-sm btn-warning mx-2"><i
-                                        class="fas fa-exchange-alt mr-2"></i>Restablecer</button>
+                                <button type="button" id="btnGuardar" class="btn-sm btn-success mx-2">
+                                    <i class="fas fa-check-square mr-2"></i>Guardar
+                                </button>
+                                <button type="submit" class="btn-sm btn-danger mx-2">
+                                    <i class="fas fa-times-circle mr-2"></i>Cancelar
+                                </button>
+                                <button type="submit" class="btn-sm btn-warning mx-2">
+                                    <i class="fas fa-exchange-alt mr-2"></i>Restablecer
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -119,6 +128,8 @@
         </div>
     </div>
 
-{{>basicScript}}
 
-    
+
+
+
+

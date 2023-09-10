@@ -1,0 +1,131 @@
+const registrarUsuarios = async () => {
+
+
+    const txtNombres = document.getElementById('txtNombres').value
+    const txtApellidos = document.getElementById('txtApellidos').value
+    const txtUsername = document.getElementById('txtUsername').value
+    const txtCorreo = document.getElementById('txtCorreo').value
+    const txtTelefono = document.getElementById('txtTelefono').value
+    const txtRol = document.getElementById('selRol').value
+    const txtPassword = document.getElementById('txtPassword').value
+    const txtPasswordRepeat = document.getElementById('txtPasswordRepeat').value
+
+    if (
+        !txtNombres ||
+        !txtApellidos ||
+        !txtUsername ||
+        !txtCorreo ||
+        !txtTelefono ||
+        !txtRol ||
+        !txtPassword ||
+        !txtPasswordRepeat
+    ) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Campos vacíos',
+            text: 'Por favor, complete todos los campos obligatorios.',
+        });
+        return;
+
+    } else{
+
+        if(!valid.validarNombre(txtNombres)){
+            alert.mostrarError('txtNombres', 'Por favor, ingrese un nombre valido')
+            return;
+        }else{
+            alert.limpiarError('txtNombres')
+        }
+
+        if(!valid.validarApellido(txtApellidos)){
+            alert.mostrarError('txtApellidos', 'Por favor, ingrese un apellido valido')
+            return;
+        }else{
+            alert.limpiarError('txtApellidos')
+        }
+
+        if(!valid.validarUsername(txtUsername)){
+            alert.mostrarError('txtUsername', 'Por favor, ingrese un username valido')
+            return;
+        }else{
+            alert.limpiarError('txtUsername')
+        }
+
+        if(!valid.validarCorreo(txtCorreo)){
+            alert.mostrarError('txtCorreo', 'Por favor, ingrese un correo valido')
+            return;
+        }else{
+            alert.limpiarError('txtCorreo')
+        }
+
+        if(!valid.validarSeleccion('selRol')){
+            alert.mostrarError('selRol', 'Por favor, ingrese un Rol valido')
+            return;
+        }else{
+            alert.limpiarError('selRol')
+        }
+
+        if(!valid.validarPassword('txtPassword')){
+            alert.mostrarError('txtPassword', 'Por favor, ingrese una contraseña valida')
+        }else{
+            alert.limpiarError('txtPassword')
+        }
+
+        if(!valid.validarPassword('txtPasswordRepeat')){
+            alert.mostrarError('txtPassword', 'Por favor, ingrese una contraseña valida')
+        }else{
+            alert.limpiarError('txtPasswordRepeat')
+        }
+
+        if (txtPassword !== txtPasswordRepeat) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Contraseñas no coinciden',
+                text: 'Las contraseñas ingresadas no coinciden.',
+            });
+            return;
+        }else{
+            // Crear el objeto de usuario
+            const usuario = {
+            nombres: txtNombres,
+            apellidos: txtApellidos,
+            username: txtUsername,
+            correo: txtCorreo,
+            telefono: txtTelefono,
+            rol: txtRol,
+            password: txtPassword,
+            };
+
+            // Enviar la solicitud si los datos son válidos
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify(usuario),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            })
+                .then((resp) => resp.json())
+                .then((json) => {
+                    if (json.msg) {
+                        // Realizar acciones después de un registro exitoso
+                        console.log(json);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registro exitoso',
+                            text: json.msg,
+                        });
+                        // Puedes redirigir al usuario o realizar otras acciones aquí
+                    }
+                })
+                .catch((error) => {
+                    // Manejar errores de la solicitud
+                    console.error('Error al registrar usuario:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al registrar usuario',
+                        text: 'Hubo un error al procesar la solicitud. Por favor, inténtelo nuevamente.',
+                    });
+                    // Puedes realizar otras acciones en caso de error aquí
+                });
+        }
+    }
+
+};

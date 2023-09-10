@@ -151,7 +151,7 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card fondo-form">
                             <div class="card-header fondo-form">
-                                <h4 class="card-title">Modificar Datos Empleado</h4>
+                                <h4 class="card-title">Formulario Crear Categoria</h4>
                                 <hr>
                             </div>
                             <div class="card-body">
@@ -159,105 +159,39 @@
                                     <form>
                                         <div class="form-row">
                                             <div class="form-group col-md-6 mb-4">
-                                                <label>Nombres</label>
+                                                <label for="txtNombre" >Nombre Categorias</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i
-                                                                class="fas fa-user"></i></span>
+                                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nombres Completos">
+                                                    <input id="txtNombre" type="text" class="form-control" placeholder="Nombre Categoria">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6 mb-4">
-                                                <label>Apellidos</label>
+                                                <label for="txtCodigo" >Codigo Categoria</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i
-                                                                class="fas fa-user"></i></span>
+                                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Apellidos Completos">
+                                                    <input id="txtCodigo" type="text" class="form-control" placeholder="Codigo Categoria">
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6 mb-4">
-                                                <label>Telefono Movil</label>
+                                            <div class="form-group col-md-12 mb-4">
+                                                <label for="txaDescripcion" >Descripcion Categoria</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-mobile"></i></span>
+                                                        <span class="input-group-text"></span>
                                                     </div>
-                                                    <input type="email" class="form-control"
-                                                        placeholder="Escribir Telefono Movil">
+                                                    <textarea id="txaDescripcion" class="form-control min-height-5" placeholder="Descripcion Categoria..."></textarea>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6 mb-4">
-                                                <label>Tipo de Documento</label>
+                                            <div class="form-group col-md-12 mb-4">
+                                                <label for="txaObservacion" >Observaciones Categoria</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-id-card"></i></span>
+                                                        <span class="input-group-text"></span>
                                                     </div>
-                                                    <select id="inputState" class="form-control">
-                                                        <option selected>Seleccionar Documento</option>
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-6 mb-4">
-                                                <label>Numero de Documento</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-id-card"></i></span>
-                                                    </div>
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Escribir Numero de Documento">
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-6 mb-4">
-                                                <label>Genero</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i
-                                                                class="fas fa-lock"></i></i></span>
-                                                    </div>
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Escribir Tu Genero">
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-6 mb-4">
-                                                <label>Direccion Residencia</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-home"></i></span>
-                                                    </div>
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Escribir Direccion de Residencia">
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-6 mb-4">
-                                                <label>Fecha de Nacimiento</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-calendar-alt"></i></span>
-                                                    </div>
-                                                    <input type="date" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-8 mx-auto mb-4">
-                                                <label>Rol Asignado</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" >
-                                                            <i class="fas fa-user"></i></span>
-                                                    </div>
-                                                    <input type="text" disabled class="form-control"
-                                                    placeholder="Escribir Rol Asignado">
+                                                    <textarea id="" class="form-control min-height-5" placeholder="Comentarios Categoria..."></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,16 +200,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>  
             </div>
             <div class="modal-footer justify-content-center">
-                <div class="mt-2">
-                    <button type="submit" class="btn-sm btn-success mx-2"><i
-                            class="fas fa-check-square mr-2"></i>Guardar</button>
-                    <button type="submit" class="btn-sm btn-danger mx-2"><i class="fas fa-times-circle mr-2"
-                            data-dismiss="modal"></i>Cancelar</button>
-                    <button type="submit" class="btn-sm btn-warning mx-2"><i
-                            class="fas fa-exchange-alt mr-2"></i>Restablecer</button>
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn-sm btn-success mx-2">
+                        <i class="fas fa-check-square mr-2"></i>Guardar
+                    </button>
+                    <button type="submit" class="btn-sm btn-danger mx-2">
+                        <i class="fas fa-times-circle mr-2"></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn-sm btn-warning mx-2">
+                        <i class="fas fa-exchange-alt mr-2"></i>Restablecer
+                    </button>
                 </div>
             </div>
         </div>

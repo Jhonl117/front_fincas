@@ -1,5 +1,7 @@
-<!-- Container Fluid-->
+
+        <!-- Container Fluid-->
 <div class="container-fluid" id="container-wrapper">
+    <div id="listarUsuarios"></div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 font-weight-bold">
             Gestion de Usuarios
@@ -37,118 +39,8 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>JuanM20</td>
-                                    <td>
-                                        <!-- <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
-                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div> -->
-                                        JuanM2830@gmail.com
-                                    </td>
-                                    <td>Empleado</td>
-                                    <td>29/07/2023</td>
-                                    <td>Activo</td>
-                                    <td>
-                                        <div class="text-center d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                            <a href="" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Deisy96</td>
-                                    <td>Deisita21@gmail.com</td>
-                                    <td>Empleado</td>
-                                    <td>20/07/2023</td>
-                                    <td>Desactivado</td>
-                                    <td>
-                                        <div class="text-center d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                            <a href="" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>CamiloJS</td>
-                                    <td>Cam.js92@outluk.com</td>
-                                    <td>Empleado</td>
-                                    <td>17/06/2023</td>
-                                    <td>Activado</td>
-                                    <td>
-                                        <div class="text-center d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                            <a href="" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Camila23</td>
-                                    <td>Camila23@gmail.com</td>
-                                    <td>Empleado</td>
-                                    <td>27/07/2022</td>
-                                    <td>Activo</td>
-                                    <td>
-                                        <div class="text-center d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                            <a href="" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Daniel02</td>
-                                    <td>Dani.02Ru@gmail.com</td>
-                                    <td>Usuario</td>
-                                    <td>15/05/2023</td>
-                                    <td>Activo</td>
-                                    <td>
-                                        <div class="text-center d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                            <a href="" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Santi20Ver</td>
-                                    <td>Santo20Vrg@gmail.com</td>
-                                    <td>Usuario</td>
-                                    <td>25/07/2023</td>
-                                    <td>Desactivado</td>
-                                    <td>
-                                        <div class="text-center d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                            <a href="" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>JuanV23</td>
-                                    <td>JuanV230@gmail.com</td>
-                                    <td>Empleado</td>
-                                    <td>20/08/2023</td>
-                                    <td>Activo</td>
-                                    <td>
-                                        <div class="text-center d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                            <a href="" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tbody id="body-usuarios">
+                                
                             </tbody>
                         </table>
                     </div>
@@ -297,4 +189,49 @@
         </div>
     </div>
 
-{{>datatableScript}}
+    <script>
+        const url = 'https://backend-valhalla.onrender.com/ruta/usuarios';
+
+        const eliminarUsuarios = (id) => {
+
+    Swal.fire({
+        title: '¿Está seguro de realizar la eliminación?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let usuario = {
+                _id: id,
+            };
+            fetch(url, {
+                method: 'DELETE',
+                mode: 'cors',
+                body: JSON.stringify(usuario),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            })
+                .then((resp) => resp.json())
+                .then((json) => {
+                    Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '¡Usuario Eliminado Exitosamente!',
+                    text: json.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                    
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    Swal.fire('Error', 'Se produjo un error al eliminar el usuario.', 'error');
+                });
+        }
+    });
+};
+    </script>

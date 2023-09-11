@@ -21,7 +21,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <form>
+                        <form id="formModificar">
                             <div class="form-row">
                                 <div class="form-group col-md-6 mb-4">
                                     <label>Nombres</label>
@@ -64,16 +64,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-4">
-                                    <label>Telefono</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-phone-square"></i></span>
-                                        </div>
-                                        <input type="text" id="txtTelefono" class="form-control" placeholder="Escribir Telefono Movil">
-                                        <div class="invalid-feedback" id="txtTelefonoError"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 mb-4">
                                     <label>Asignar Rol</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -87,7 +77,6 @@
                                         </select>
                                         <div class="invalid-feedback" id="selRolError"></div>
                                     </div>
-
                                 </div>
                                 <div class="form-group col-md-6 mb-4">
                                     <label>Contraseña</label>
@@ -99,7 +88,7 @@
                                         <div class="invalid-feedback" id="txtPasswordError"></div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-6 mb-4">
+                                <div class="form-group col-md-8 mx-auto mb-4">
                                     <label>Confirmar Contraseña</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -114,10 +103,10 @@
                                 <button type="button" id="btnGuardar" class="btn-sm btn-success mx-2">
                                     <i class="fas fa-check-square mr-2"></i>Guardar
                                 </button>
-                                <button type="submit" class="btn-sm btn-danger mx-2">
+                                <button type="button" id="btnCancelar" class="btn-sm btn-danger mx-2">
                                     <i class="fas fa-times-circle mr-2"></i>Cancelar
                                 </button>
-                                <button type="submit" class="btn-sm btn-warning mx-2">
+                                <button type="button" id="btnReset" class="btn-sm btn-warning mx-2">
                                     <i class="fas fa-exchange-alt mr-2"></i>Restablecer
                                 </button>
                             </div>

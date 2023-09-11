@@ -56,7 +56,7 @@
         <script src="js/demo/chart-pie-demo.js"></script>
     {{/if}}
 
-    {{#if usuarioL}}
+    {{#if tabla}}
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     {{/if}}
@@ -71,6 +71,14 @@
 
     {{#if empleadoR}}
         <script type="module" src="consumo/empleados.js"></script>
+    {{/if}}
+
+    {{#if categoriaR}}
+        <script type="module" src="consumo/categorias.js"></script>
+    {{/if}}
+
+    {{#if servicioR}}
+        <script type="module" src="consumo/servicios.js"></script>
     {{/if}}
 
 

@@ -26,105 +26,15 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>ID</th>
+                                    <th>Codigo</th>
                                     <th>Nombre Categoria</th>
                                     <th>Descripcion</th>
-                                    <th>Codigo</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Barberia</td>
-                                    <td>Cortes y afeitados de primera clase para hombres</td>
-                                    <td>10245</td>
-                                    <td>Activado</td>
-                                    <td>
-                                        <div class=" d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Peluqueria</td>
-                                    <td>Estilo y bezella para tu cabello</td>
-                                    <td>12245</td>
-                                    <td>Activado</td>
-                                    <td>
-                                        <div class=" d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Manicure</td>
-                                    <td>Uñas impecables y Cuidadas</td>
-                                    <td>13245</td>
-                                    <td>Desactivado</td>
-                                    <td>
-                                        <div class=" d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Pedicure</td>
-                                    <td>tratamiento y Cuidado de los pies</td>
-                                    <td>14245</td>
-                                    <td>Activado</td>
-                                    <td>
-                                        <div class=" d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Tratamiento</td>
-                                    <td>Reviver Cabello con tratamiento especiales</td>
-                                    <td>15245</td>
-                                    <td>Activado</td>
-                                    <td>
-                                        <div class=" d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Coloraciones</td>
-                                    <td>Colores modernos y personalizados</td>
-                                    <td>16245</td>
-                                    <td>Desactivado</td>
-                                    <td>
-                                        <div class=" d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Peinados</td>
-                                    <td>Peinados de moda para cada ocasion</td>
-                                    <td>17245</td>
-                                    <td>Activado</td>
-                                    <td>
-                                        <div class=" d-flex justify-content-around">
-                                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -156,8 +66,9 @@
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form>
+                                    <form id="formModificar">
                                         <div class="form-row">
+                                            <input type="text" hidden id="txtID">
                                             <div class="form-group col-md-6 mb-4">
                                                 <label for="txtNombre" >Nombre Categorias</label>
                                                 <div class="input-group">
@@ -165,6 +76,7 @@
                                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                     </div>
                                                     <input id="txtNombre" type="text" class="form-control" placeholder="Nombre Categoria">
+                                                    <div class="invalid-feedback" id="txtNombreError"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6 mb-4">
@@ -174,24 +86,27 @@
                                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                     </div>
                                                     <input id="txtCodigo" type="text" class="form-control" placeholder="Codigo Categoria">
+                                                    <div class="invalid-feedback" id="txtCodigoError"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12 mb-4">
-                                                <label for="txaDescripcion" >Descripcion Categoria</label>
+                                                <label for="txtDescripcion" >Descripcion Categoria</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"></span>
                                                     </div>
-                                                    <textarea id="txaDescripcion" class="form-control min-height-5" placeholder="Descripcion Categoria..."></textarea>
+                                                    <textarea id="txtDescripcion" class="form-control min-height-5" placeholder="Descripcion Categoria..."></textarea>
+                                                    <div class="invalid-feedback" id="txtDescripcionError"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12 mb-4">
-                                                <label for="txaObservacion" >Observaciones Categoria</label>
+                                                <label for="txtObservaciones" >Observaciones Categoria</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"></span>
                                                     </div>
-                                                    <textarea id="" class="form-control min-height-5" placeholder="Comentarios Categoria..."></textarea>
+                                                    <textarea id="txtObservaciones" class="form-control min-height-5" placeholder="Comentarios Categoria..."></textarea>
+                                                    <div class="invalid-feedback" id="txtObservacionesError"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -203,21 +118,96 @@
                 </div>  
             </div>
             <div class="modal-footer justify-content-center">
-                <div class="text-center mt-2">
-                    <button type="submit" class="btn-sm btn-success mx-2">
-                        <i class="fas fa-check-square mr-2"></i>Guardar
-                    </button>
-                    <button type="submit" class="btn-sm btn-danger mx-2">
-                        <i class="fas fa-times-circle mr-2"></i>Cancelar
-                    </button>
-                    <button type="submit" class="btn-sm btn-warning mx-2">
-                        <i class="fas fa-exchange-alt mr-2"></i>Restablecer
-                    </button>
+                    <div class="mt-2">
+                        <button type="button" class="btn-sm btn-success mx-2" id="btnMdGuardar">
+                            <i class="fas fa-check-square mr-2"></i>Guardar
+                        </button>
+                        <button type="button" class="btn-sm btn-danger mx-2" data-dismiss="modal">
+                            <i class="fas fa-times-circle mr-2" ></i>Cancelar
+                        </button>
+                        <button type="button" class="btn-sm btn-warning mx-2" id="btnMdReset">
+                            <i class="fas fa-exchange-alt mr-2"></i>Restablecer
+                        </button>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
 
 
-{{>datatableScript}}
+<script>
+
+    const url = 'https://backend-valhalla.onrender.com/ruta/categorias';
+
+    const eliminarCategorias = (id) => {
+        
+        event.preventDefault();
+
+    Swal.fire({
+        title: '¿Está seguro de realizar la eliminación?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let categoria = {
+                _id: id,
+            };
+            fetch(url, {
+                method: 'DELETE',
+                mode: 'cors',
+                body: JSON.stringify(categoria),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            })
+                .then((resp) => resp.json())
+                .then((json) => {
+                    Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '¡Cliente Eliminado Exitosamente!',
+                    text: json.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                    
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Cliente Eliminado Exitosamente!',
+                        text: 'Se produjo un error al eliminar el Cliente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                        
+                    
+                });
+            }
+        });
+    };
+
+
+    const verCategorias = (categorias) => {
+
+        console.log(categorias)
+
+        event.preventDefault();
+
+        document.getElementById('txtID').value = categorias._id
+        document.getElementById('txtNombre').value = categorias.nombre
+        document.getElementById('txtCodigo').value = categorias.codigoCategoria
+        document.getElementById('txtDescripcion').value = categorias.descripcion
+        document.getElementById('txtObservaciones').value = categorias.observaciones
+        
+    }
+</script>

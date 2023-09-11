@@ -1,9 +1,9 @@
 import * as valid from '../validations/expresiones.mjs';
 import * as alert from '../validations/alertas.mjs';
 
-const url = 'https://backend-valhalla.onrender.com/ruta/clientes';
+const url = 'https://backend-valhalla.onrender.com/ruta/servicios';
 
-const listarClientes = async () => {
+const listarServicios = async () => {
     const tabla = $('#dataTable').DataTable({
 
         "bProcessing": true, // Habilita la pantalla de carga
@@ -105,7 +105,7 @@ const modificarClientes = async () => {
                         timer: 1500
                     })
                     setTimeout(() => {
-                        window.location.href = '/listarClientes';
+                        window.location.href = '/listarServicios';
                     }, 2000);
                 }
             })
@@ -115,7 +115,7 @@ const modificarClientes = async () => {
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
-                    title: '¡Error al Registrar Cliente!',
+                    title: '¡Error al Registrar Servicio!',
                     text: 'No se pudo procesar la solicitud, Inténtelo nuevamente.',
                     showConfirmButton: false,
                     timer: 1500
@@ -135,8 +135,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const PageUrl = window.location.href;
 
     // Verificar si la URL contiene "listarusuarios"
-    if (PageUrl.includes("/listarClientes")) {
-        listarClientes();
+    if (PageUrl.includes("/listarServicios")) {
+        listarServicios();
 
 
         document.getElementById('btnMdReset').
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         document.getElementById('btnMdGuardar').
         addEventListener('click', () => {
-            modificarClientes()
+            modificarServicios()
         })
 
 
@@ -154,11 +154,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-
-
-
-
-
-
-
-

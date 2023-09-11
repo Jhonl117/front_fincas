@@ -32,7 +32,7 @@ router.get('/panelAdministrativo', (req, res) => {
 router.get('/listarUsuarios', (req, res) => {
     res.render('usuarios/listarUsuarios', {
         global: true,
-        usuarioL: true,
+        tabla: true,
         usuarioR: true
     })
 })
@@ -51,7 +51,7 @@ router.get('/crearUsuario', (req, res) => {
 router.get('/listarClientes', (req, res) => {
     res.render('clientes/listarClientes', {
         global: true,
-        usuarioL: true,
+        tabla: true,
         clienteR: true
     })
 })
@@ -64,7 +64,7 @@ router.get('/listarClientes', (req, res) => {
 router.get('/listarEmpleados', (req, res) => {
     res.render('empleados/listarEmpleados', {
         global: true,
-        usuarioL: true,
+        tabla: true,
         empleadoR: true
     })
 })
@@ -76,12 +76,15 @@ router.get('/listarEmpleados', (req, res) => {
 router.get('/listarCategorias', (req, res) => {
     res.render('categorias/listarCategorias', {
         global: true,
+        tabla: true,
+        categoriaR:true,
     })
 })
 
 router.get('/crearCategorias', (req, res) => {
     res.render('categorias/formCategorias', {
         global: true,
+        categoriaR:true,
     })
 })
 
@@ -91,12 +94,15 @@ router.get('/crearCategorias', (req, res) => {
 router.get('/listarServicios', (req, res) => {
     res.render('servicios/listarServicios', {
         global: true,
+        tabla: true,
+        servicioR: true,
     })
 })
 
 router.get('/crearServicios', (req, res) => {
     res.render('servicios/formServicios', {
         global: true,
+        servicioR: true,
     })
 })
 

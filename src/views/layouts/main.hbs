@@ -19,17 +19,26 @@
 
 <body id="page-top">
 
-    <div id="wrapper">
+    {{#if global}}
+            <div id="wrapper">
 
-        <!-- Navegacion Pagina-->
-        {{>navbar}}
+                <!-- Navegacion Pagina-->
+                {{>navbar}}
 
-        <!-- Contenido principal -->
+                <!-- Contenido principal -->
+                {{{body}}}
+
+                <!-- Pie de Pagina-->
+                {{>footer}}
+
+            </div>
+
+    {{else}}
+
         {{{body}}}
 
-        <!-- Pie de Pagina-->
-        {{>footer}}
-    </div>
+        <script type="module" src="consumo/acceso.js"></script>
+    {{/if}}
 
     <!-- Scroll to top -->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -55,6 +64,15 @@
     {{#if usuarioR}}
         <script type="module" src="consumo/usuarios.js"></script>
     {{/if}}
+
+    {{#if clienteR}}
+        <script type="module" src="consumo/clientes.js"></script>
+    {{/if}}
+
+    {{#if empleadoR}}
+        <script type="module" src="consumo/empleados.js"></script>
+    {{/if}}
+
 
 </body>
 </html>

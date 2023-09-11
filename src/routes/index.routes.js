@@ -8,16 +8,19 @@ const router = Router()
 // ================================= \\
 // Rutas index
 
-router.get('/login', (req, res) => {
-    res.render('login')
+router.get('/', (req, res) => {
+    res.render('acceso/login', {
+        login: false
+    })
 })
 
 router.get('/register', (req, res) => {
-    res.render('register')
+    res.render('acceso/register')
 })
 
-router.get('/', (req, res) => {
+router.get('/panelAdministrativo', (req, res) => {
     res.render('index', {
+        global: true,
         dasboard: true
     })
 })
@@ -28,6 +31,7 @@ router.get('/', (req, res) => {
 
 router.get('/listarUsuarios', (req, res) => {
     res.render('usuarios/listarUsuarios', {
+        global: true,
         usuarioL: true,
         usuarioR: true
     })
@@ -35,6 +39,7 @@ router.get('/listarUsuarios', (req, res) => {
 
 router.get('/crearUsuario', (req, res) => {
     res.render('usuarios/formUsuarios', {
+        global: true,
         usuarioR: true
     })
 })
@@ -44,7 +49,11 @@ router.get('/crearUsuario', (req, res) => {
 // Rutas Clientes
 
 router.get('/listarClientes', (req, res) => {
-    res.render('clientes/listarClientes')
+    res.render('clientes/listarClientes', {
+        global: true,
+        usuarioL: true,
+        clienteR: true
+    })
 })
 
 
@@ -53,7 +62,11 @@ router.get('/listarClientes', (req, res) => {
 // Rutas Empleado
 
 router.get('/listarEmpleados', (req, res) => {
-    res.render('empleados/listarEmpleados')
+    res.render('empleados/listarEmpleados', {
+        global: true,
+        usuarioL: true,
+        empleadoR: true
+    })
 })
 
 
@@ -61,22 +74,30 @@ router.get('/listarEmpleados', (req, res) => {
 // Rutas Categorias
 
 router.get('/listarCategorias', (req, res) => {
-    res.render('categorias/listarCategorias')
+    res.render('categorias/listarCategorias', {
+        global: true,
+    })
 })
 
 router.get('/crearCategorias', (req, res) => {
-    res.render('categorias/formCategorias')
+    res.render('categorias/formCategorias', {
+        global: true,
+    })
 })
 
 // ================================= \\
 // Rutas Servicios
 
 router.get('/listarServicios', (req, res) => {
-    res.render('servicios/listarServicios')
+    res.render('servicios/listarServicios', {
+        global: true,
+    })
 })
 
 router.get('/crearServicios', (req, res) => {
-    res.render('servicios/formServicios')
+    res.render('servicios/formServicios', {
+        global: true,
+    })
 })
 
 // ================================= \\

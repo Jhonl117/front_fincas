@@ -99,7 +99,7 @@ const modificarClientes = async () => {
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
-                        title: '¡Modificacion Exitosa!',
+                        title: '¡Modificación Exitosa!',
                         text: json.msg,
                         showConfirmButton: false,
                         timer: 1500

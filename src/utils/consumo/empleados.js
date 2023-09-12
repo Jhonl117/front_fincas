@@ -1,3 +1,6 @@
+import * as valid from '../validations/expresiones.mjs';
+import * as alert from '../validations/alertas.mjs';
+
 const url = 'https://backend-valhalla.onrender.com/ruta/empleados';
 
 const listarEmpleados = async () => {
@@ -7,11 +10,11 @@ const listarEmpleados = async () => {
         "serverSide": false, // Puedes cambiar esto según tus necesidades
 
         "columns": [
-            { "data": "index" }, // Índice autoincremental
+            { "data": "index" },
             { "data": "numeroDocumento" },
             { "data": "nombres" },
             { "data": "apellidos" },
-            { "data": "genero" }, // Fecha de registro
+            { "data": "genero" }, 
             { "data": "telefono" },
             {   // Columna de botones de acción
                 "data": "botones_accion",
@@ -31,16 +34,14 @@ const listarEmpleados = async () => {
             const listaEmpleados = data.empleados;
 
             // Agregar un índice autoincremental y fecha de registro a los datos
-            listaEmpleados.forEach((usuario, index) => {
-                usuario.index = index + 1;
-                usuario.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+            listaEmpleados.forEach((empleado, index) => {
+                empleado.index = index + 1;
+                empleado.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
                 
-                usuario.botones_accion = `
-
-                
+                empleado.botones_accion = `
                 <div class=" d-flex justify-content-around">
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
-                    <a href="" class="btn btn-danger" onclick="eliminarEmpleados('${usuario._id}')"><i class="fas fa-trash-alt"></i></a>
+                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verEmpleados(${JSON.stringify(empleado)})'><i class="fas fa-edit" ></i></a>
+                    <a href="" class="btn btn-danger" onclick="eliminarEmpleados('${empleado._id}')"><i class="fas fa-trash-alt"></i></a>
                     <a href="" class="btn btn-warning" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
                     <a href="" class="btn btn-info" data-toggle="modal" data-target="#ServicesModal"><i class="fas fa-cut"></i></a>
                 </div>
@@ -56,6 +57,82 @@ const listarEmpleados = async () => {
 }
 
 
+// ===============================================================
+
+
+const modificarEmpleados = async () => {
+
+    const campos = [
+        { id: 'txtNombres', label: 'Nombres', validacion: valid.validarNombre },
+        { id: 'txtApellidos', label: 'Apellidos', validacion: valid.validarApellido },
+        { id: 'txtTelefono', label: 'Telefono', validacion: valid.validarTelefono},
+        { id: 'selDocumento', label: 'Tipo Documento'},
+        { id: 'txtNumDocumento', label: 'Numero Documento', validacion: valid.validarDocumento},
+        { id: 'txtGenero', label: 'Genero', validacion: valid.validarGenero},
+        { id: 'txtDireccion', label: 'Direccion', validacion: valid.validarDireccion}
+    ];
+
+    if (!alert.validarCampos(campos)) {
+        return;
+    }else{
+        
+        const Empleado = {
+            _id: document.getElementById('txtID').value,
+            nombres: document.getElementById('txtNombres').value,
+            apellidos: document.getElementById('txtApellidos').value,
+            telefono: document.getElementById('txtTelefono').value, 
+            tipoDocumento: document.getElementById('selDocumento').value, 
+            numeroDocumento: document.getElementById('txtNumDocumento').value, 
+            genero: document.getElementById('txtGenero').value, 
+            direccion: document.getElementById('txtDireccion').value
+        };
+
+        fetch(url, {
+            method: 'PUT',
+            mode: 'cors',
+            body: JSON.stringify(Empleado),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        })
+            .then((resp) => resp.json())
+            .then((json) => {
+                if (json.msg) {
+
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '¡Modificacion Exitosa!',
+                        text: json.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    setTimeout(() => {
+                        window.location.href = '/listarEmpleados';
+                    }, 2000);
+                }
+            })
+            .catch((error) => {
+                
+                console.error('Error al registrar Empleado:', error);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: '¡Error al Registrar Empleado!',
+                    text: 'No se pudo procesar la solicitud, Inténtelo nuevamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                window.location.reload();
+            });
+    }
+
+}
+
+
+
+
+// ===================================================
+
+// Eventos JavaScript Empleados
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -65,7 +142,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // Verificar si la URL contiene "listarusuarios"
     if (PageUrl.includes("/listarEmpleados")) {
         listarEmpleados();
+
+        document.getElementById('btnMdReset').
+        addEventListener('click', () => {
+            document.getElementById('formModificar').reset()
+        })
+
+        document.getElementById('btnMdGuardar').
+        addEventListener('click', () => {
+            modificarEmpleados()
+        })
     }
+
 
 });
 

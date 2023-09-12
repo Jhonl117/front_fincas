@@ -101,11 +101,11 @@ const crearCategorias = async () => {
             })
             .catch((error) => {
                 
-                console.error('Error al registrar categoria:', error);
+                console.error('Error al registrar categoría:', error);
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
-                    title: '¡Error al Registrar Categoria!',
+                    title: '¡Error al Registrar Categoría!',
                     text: 'No se pudo procesar la solicitud, Inténtelo nuevamente.',
                     showConfirmButton: false,
                     timer: 1500
@@ -153,7 +153,7 @@ const modificarCategorias = async () => {
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
-                        title: '¡Modificacion Exitosa!',
+                        title: '¡Modificación Exitosa!',
                         text: json.msg,
                         showConfirmButton: false,
                         timer: 1500
@@ -169,7 +169,7 @@ const modificarCategorias = async () => {
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
-                    title: '¡Error al Registrar Categoria!',
+                    title: '¡Error al Registrar Categoría!',
                     text: 'No se pudo procesar la solicitud, Inténtelo nuevamente.',
                     showConfirmButton: false,
                     timer: 1500
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
             Swal.fire({
                 title: '¿Estas Seguro?',
-                text: 'No se registrara ningun Usuario',
+                text: 'No se registrará ninguna categoría',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Salir',

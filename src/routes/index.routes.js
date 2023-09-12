@@ -15,7 +15,9 @@ router.get('/', (req, res) => {
 })
 
 router.get('/register', (req, res) => {
-    res.render('acceso/register')
+    res.render('acceso/register', {
+        login: false
+    })
 })
 
 router.get('/panelAdministrativo', (req, res) => {
@@ -84,7 +86,7 @@ router.get('/listarCategorias', (req, res) => {
 router.get('/crearCategorias', (req, res) => {
     res.render('categorias/formCategorias', {
         global: true,
-        categoriaR:true,
+        categoriaR: true,
     })
 })
 
@@ -95,7 +97,7 @@ router.get('/listarServicios', (req, res) => {
     res.render('servicios/listarServicios', {
         global: true,
         tabla: true,
-        servicioR: true,
+        servicioR:true,
     })
 })
 
@@ -105,6 +107,30 @@ router.get('/crearServicios', (req, res) => {
         servicioR: true,
     })
 })
+
+
+// ================================= \\
+// Rutas Reservas
+
+router.get('/listarReservas', (req, res) => {
+    res.render('reservas/listarReservas', {
+        global: true,
+        tabla: true,
+        reservasR: true,
+    })
+})
+
+
+// ================================= \\
+// Rutas Ventas
+
+router.get('/listarVentas', (req, res) => {
+    res.render('ventas/listarVentas', {
+        global: true,
+        ventaR: true
+    })
+})
+
 
 // ================================= \\
 // Ruta Error

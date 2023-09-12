@@ -45,7 +45,7 @@ export const validarDocumento = (documento) => {
 }
 
 export const validarTextArea = (text) => {
-    const result = /^[A-Za-z0-9\s]+$/;
+    const result = /^[A-Za-z0-9\s,.]+$/;
     return result.test(text)
 }
 

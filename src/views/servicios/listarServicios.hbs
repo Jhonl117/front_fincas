@@ -29,10 +29,12 @@
                                     <th>Nombre</th>
                                     <th>Duracion</th>
                                     <th>Precio</th>
-                                    <th>Categoria</th>                              
+                                    <th>Categoria</th>  
+                                    <th>Estado</th>
+                                    <th>Acciones</th>                              
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
                 
                             </tbody>
                         </table>
@@ -45,8 +47,7 @@
 
 
 <!-- Modal Modificar Datos -->
-<div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-    aria-hidden="true">
+<div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -60,72 +61,78 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card fondo-form">
                             <div class="card-header fondo-form">
-                                <h4 class="card-title">Modificar Servicios</h4>
+                                <h4 class="card-title">Formulario Modificar Servicio</h4>
                                 <hr>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form>
+                                    <form id="formModificar">
                                         <div class="form-row">
+                                            <input type="text" hidden id="txtID">
                                             <div class="form-group col-md-6 mb-4">
-                                                <label>Nombre</label>
+                                                <label for="txtNombre" >Nombre</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i
                                                                 class="fas fa-user"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control"
+                                                    <input id="txtNombre" type="text" class="form-control"
                                                         placeholder="Nombres Completos">
-                                                </div>
+                                                        <div class="invalid-feedback" id="txtNombreError"></div>
+                                                </div>                                              
                                             </div>
                                             <div class="form-group col-md-6 mb-4">
-                                                <label>Duracion</label>
+                                                <label for="txtDuracion">Duracion</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i
                                                                 class="fas fa-user"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Apellidos Completos">
+                                                    <input id="txtDuracion" type="text" class="form-control"
+                                                        placeholder="Duracion del servicio">
+                                                        <div class="invalid-feedback" id="txtDuracionError"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6 mb-4">
-                                                <label>Precio</label>
+                                                <label for="txtPrecio">Precio</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                             <i class="fas fa-mobile"></i></span>
                                                     </div>
-                                                    <input type="email" class="form-control"
+                                                    <input id="txtPrecio" type="text" class="form-control"
                                                         placeholder="Escribir Telefono Movil">
-                                                </div>
+                                                        <div class="invalid-feedback" id="txtPrecioError"></div>
+                                                </div>                                               
                                             </div>
                                             <div class="form-group col-md-6 mb-4">
-                                                <label>Categoria</label>
+                                                <label for="txtCategoria">Categoria</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                             <i class="fas fa-id-card"></i></span>
                                                     </div>
-                                                    <select id="inputState" class="form-control">
-                                                        <option selected>Seleccionar Documento</option>
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
+                                                    <select id="txtCategoria" class="form-control">
+                                                        <option selected>Seleccionar Categoria</option>
+                                                        <option>Barberia</option>
+                                                        <option>Peluqueria</option>
+                                                        <option>Manicure</option>
                                                     </select>
-                                                </div>
+                                                    <div class="invalid-feedback" id="txtCategoriaError"></div>
+                                                </div>                                               
                                             </div>
                                             <div class="form-group col-md-6 mb-4">
-                                                <label>Descripcion</label>
+                                                <label for="txtDescripcion">Descripcion</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                             <i class="fas fa-id-card"></i></span>
                                                     </div>
-                                                    <input type="" class="form-control"
+                                                    <input id="txtDescripcion" type="" class="form-control"
                                                         placeholder="Escribir Numero de Documento">
-                                                </div>
-                                            </div>                                                                                
+                                                        <div class="invalid-feedback" id="txtDescripcionError"></div>
+                                                </div>                                               
+                                            <div>             
                                         </div>
                                     </form>
                                 </div>
@@ -136,12 +143,15 @@
             </div>
             <div class="modal-footer justify-content-center">
                 <div class="mt-2">
-                    <button type="submit" class="btn-sm btn-success mx-2"><i
-                            class="fas fa-check-square mr-2"></i>Guardar</button>
-                    <button type="submit" class="btn-sm btn-danger mx-2"><i class="fas fa-times-circle mr-2"
-                            data-dismiss="modal"></i>Cancelar</button>
-                    <button type="submit" class="btn-sm btn-warning mx-2"><i
-                            class="fas fa-exchange-alt mr-2"></i>Restablecer</button>
+                    <button type="button" class="btn-sm btn-success mx-2" id="btnMdGuardar">
+                        <i class="fas fa-check-square mr-2"></i>Guardar
+                    </button>
+                    <button type="button" class="btn-sm btn-danger mx-2" data-dismiss="modal">
+                        <i class="fas fa-times-circle mr-2" ></i>Cancelar
+                    </button>
+                    <button type="button" class="btn-sm btn-warning mx-2" id="btnMdReset">
+                        <i class="fas fa-exchange-alt mr-2"></i>Restablecer
+                    </button>
                 </div>
             </div>
         </div>
@@ -149,75 +159,150 @@
 </div>
 
 <!-- Modal Ver Datos -->
-<div class="modal fade" id="ShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabelLogout"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-12 grid-margin stretch-card">
-                        <div class="card fondo-form">
-                            <div class="card-header fondo-form">
-                                <h4 class="card-title">Datos del Servicio</h4>
-                                <hr>
-                            </div>
-                            <div class="container pb-5">
-                                <div class="row flex-md-row align-items-center">
-                                    <div class="col-md-4">
-                                    <p class=" h4 text-center font-weight-bold mb-3">ID: 5</p>
-                                    <img src="img/boy.png" alt="Imagen" class="img-fluid">
-                                    <p class=" h4 text-center font-weight-bold mt-3">Empleado</p>
-                                    </div>
-                                    <div class="col-mdl-6 mx-auto">
-                                        <div class=" pt-3 text-center">
-                                            <table class="table table-bordered rounded">
-                                                <tr>
-                                                    <th scope="row" class="bg-navbar">Tipo Documento</th>
-                                                    <td class="bg-white">Cédula</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="bg-navbar">N° Documento</th>
-                                                    <td class="bg-white">1000345678</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="bg-navbar">Nombres</th>
-                                                    <td class="bg-white">Juan José</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="bg-navbar">Apellidos</th>
-                                                    <td class="bg-white">Alvarez Moncada</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="bg-navbar">Género</th>
-                                                    <td class="bg-white">Masculino</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="bg-navbar">Fecha_Nacimiento</th>
-                                                    <td class="bg-white">2000/10/30</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="bg-navbar">Direccion</th>
-                                                    <td class="bg-white">Calle 57A #102D 65</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="bg-navbar">Telefono</th>
-                                                    <td class="bg-white">3123456767</td>
-                                                </tr>
-                                            </table>
+
+    <div class="modal fade" id="ShowModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelLogout"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card fondo-form">
+                                <div class="card-header fondo-form">
+                                    <h4 class="card-title">Datos del Servicio</h4>
+                                    <hr>
+                                </div>
+                                <div class="container pb-5">
+                                    <div class="row flex-md-row align-items-center">
+                                        <div class="col-md-4">
+                                        <p class=" h4 text-center font-weight-bold mb-3">ID: 3</p>
+                                        <img src="img/boy.png" alt="Imagen" class="img-fluid">
+                                        <p class=" h4 text-center font-weight-bold mt-3">Servicio</p>
+                                        </div>
+                                        <div class="col-mdl-6 mx-auto">
+                                            <div class=" pt-3 text-center">
+                                                <table class="table table-bordered rounded">
+                                                    <tr>
+                                                        <th scope="row" class="bg-navbar">Nombre</th>
+                                                        <td class="bg-white">barba</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" class="bg-navbar">Duracion</th>
+                                                        <td class="bg-white">2 horas</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" class="bg-navbar">Precio</th>
+                                                        <td class="bg-white">12400</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" class="bg-navbar">Categorias</th>
+                                                        <td class="bg-white">Peluqueria</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" class="bg-navbar">Estado</th>
+                                                        <td class="bg-white">true</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" class="bg-navbar">Descripcion</th>
+                                                        <td class="bg-white">Ni idea</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> 
+                                </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+<script>
+
+    
+
+    const url = 'https://backend-valhalla.onrender.com/ruta/servicios';
+
+    const eliminarServicios = (id) => {
+        
+        event.preventDefault();
+
+    Swal.fire({
+        title: '¿Está seguro de realizar la eliminación?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let servicio = {
+                _id: id,
+            };
+            fetch(url, {
+                method: 'DELETE',
+                mode: 'cors',
+                body: JSON.stringify(servicio),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            })
+                .then((resp) => resp.json())
+                .then((json) => {
+                    Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '¡Servicio Eliminado Exitosamente!',
+                    text: json.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                    
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Servicio Eliminado Exitosamente!',
+                        text: 'Se produjo un error al eliminar el Servicio',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                        
+                    
+                });
+            }
+        });
+    };
+
+
+
+
+    const verServicios = (servicios) => {
+
+        console.log(servicios)
+        event.preventDefault();
+
+        document.getElementById('txtID').value = servicios._id
+        document.getElementById('txtNombre').value = servicios.nombre
+        document.getElementById('txtDuracion').value = servicios.duracion
+        document.getElementById('txtPrecio').value = servicios.precio
+        document.getElementById('txtCategoria').value = servicios.categoria
+        document.getElementById('txtEstado').value = servicios.estado
+        document.getElementById('txtDescripcion').value = servicios.descripcion
+
+    }
+    
+</script>

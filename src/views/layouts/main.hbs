@@ -12,9 +12,8 @@
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="css/ruang-admin.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+    <link href="css/ruang-admin.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -61,6 +60,7 @@
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     {{/if}}
 
+
     {{#if usuarioR}}
         <script type="module" src="consumo/usuarios.js"></script>
     {{/if}}
@@ -79,6 +79,15 @@
 
     {{#if servicioR}}
         <script type="module" src="consumo/servicios.js"></script>
+    {{/if}}
+
+    {{#if reservasR}}
+
+        <script type="module" src="consumo/reservas.js"></script>
+    {{/if}}
+
+    {{#if ventaR}}
+        <script type="module" src="consumo/ventas.js"></script>
     {{/if}}
 
 

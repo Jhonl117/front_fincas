@@ -180,7 +180,7 @@ const modificarUsuarios = async () => {
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
-                        title: '¡Modificacion Exitosa!',
+                        title: '¡Modificación Exitosa!',
                         text: json.msg,
                         showConfirmButton: false,
                         timer: 1500
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
             Swal.fire({
                 title: '¿Estas Seguro?',
-                text: 'No se registrara ningun Usuario',
+                text: 'No se registrará ningún Usuario',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Salir',

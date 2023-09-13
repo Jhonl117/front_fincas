@@ -4969,10 +4969,10 @@ input[type="submit"].btn-block {
 }
 .badge {
   display: inline-block;
-  padding: 0.25em 0.4em;
-  font-size: 75%;
+  padding: 0.4em 0.4em;
+  font-size: 80%;
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.2;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -5041,8 +5041,8 @@ a.badge-secondary:focus {
   box-shadow: 0 0 0 0.2rem rgba(133, 135, 150, 0.5);
 }
 .badge-success {
-  color: #fff;
-  background-color: #66bb6a;
+  color: #4caf50;
+  background: rgba(76,175,80,.15);
 }
 a.badge-success:focus,
 a.badge-success:hover {
@@ -5086,8 +5086,8 @@ a.badge-warning:focus {
   box-shadow: 0 0 0 0.2rem rgba(246, 194, 62, 0.5);
 }
 .badge-danger {
-  color: #fff;
-  background-color: #fc544b;
+  color: #ff1744;
+  background: rgba(255,23,68,.15);
 }
 a.badge-danger:focus,
 a.badge-danger:hover {

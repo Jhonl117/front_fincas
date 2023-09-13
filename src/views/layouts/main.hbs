@@ -13,6 +13,7 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="./plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
     <link href="css/ruang-admin.min.css" rel="stylesheet">
 </head>
 
@@ -83,7 +84,10 @@
     {{/if}}
 
     {{#if reservasR}}
-
+        <script src="./plugins/jqueryui/js/jquery-ui.min.js"></script>
+        <script src="./plugins/moment/moment.min.js"></script>
+        <script src="./plugins/fullcalendar/js/fullcalendar.min.js"></script>
+        <script src="./js/plugins-init/fullcalendar-init.js"></script>
         <script type="module" src="consumo/reservas.js"></script>
     {{/if}}
 

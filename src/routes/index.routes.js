@@ -140,6 +140,12 @@ router.get('/listarRoles', (req, res) => {
         configuracionR: true
     })
 })
+router.get('/crearRoles', (req, res) => {
+    res.render('configuracion/crearRoles', {
+        global: true,
+        configuracionR: true
+    })
+})
 
 // ================================= \\
 // Ruta Error

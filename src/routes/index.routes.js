@@ -130,7 +130,16 @@ router.get('/listarVentas', (req, res) => {
         ventaR: true
     })
 })
+// ================================= \\
+// Rutas Configuracion/roles
 
+router.get('/listarRoles', (req, res) => {
+    res.render('configuracion/listarRoles', {
+        global: true,
+        tabla: true,
+        configuracionR: true
+    })
+})
 
 // ================================= \\
 // Ruta Error

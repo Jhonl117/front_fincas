@@ -38,12 +38,12 @@ const listarServicios = async () => {
         listaServicios.forEach((servicio, index) => {
             servicio.index = index + 1;
             servicio.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-            
+            servicio.estado= `<span class="badge badge-success">ACTIVADO</span>`;
             servicio.botones_accion = `
                 <div class="text-center d-flex justify-content-around">
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verServicios(${JSON.stringify(servicio)})'><i class="fas fa-edit" ></i></a>
+                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verServicios(${JSON.stringify(servicio)})' ><i class="fas fa-edit"></i></a>
                     <a href="" class="btn btn-danger" onclick="eliminarServicios('${servicio._id}')"><i class="fas fa-trash-alt"></i></a>
-                    <a href="" class="btn btn-warning" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
+                    <a href="" class="btn btn-warning" data-toggle="modal" data-target="#ShowModal" ><i class="fas fa-eye"></i></a>
                 </div>
             `;
         });
@@ -64,8 +64,7 @@ const crearServicios = async () => {
         { id: 'txtNombre', label: 'Nombres', validacion: valid.validarNombre },
         { id: 'txtDuracion', label: 'Duracion', validacion: valid.validar},
         { id: 'txtPrecio', label: 'Precio', validacion: valid.validarPrecio},
-        { id: 'txtCategoria', label: 'Categoria', validacion: valid.validarCategoria},
-        { id: 'txtEstado', label: 'Estado', validacion: valid.validarEstado},
+        { id: 'selCategoria', label: 'Categoria', validacion: valid.validarCategoria},
         { id: 'txtDescripcion', label: 'Descripcion', validacion: valid.validarDescripcion}
     ];
 
@@ -77,8 +76,7 @@ const crearServicios = async () => {
             nombre: document.getElementById('txtNombre').value,
             duracion: document.getElementById('txtDuracion').value,
             precio: document.getElementById('txtPrecio').value, 
-            categoria: document.getElementById('txtCategoria').value, 
-            estado: document.getElementById('txtEstado').value, 
+            categoria: document.getElementById('selCategoria').value, 
             descripcion: document.getElementById('txtDescripcion').value, 
         };
 
@@ -130,7 +128,7 @@ const modificarServicios = async () => {
         { id: 'txtNombre', label: 'Nombres', validacion: valid.validarNombre },
         { id: 'txtDuracion', label: 'Duracion', validacion: valid.validarDuracion},
         { id: 'txtPrecio', label: 'Precio', validacion: valid.validarPrecio},
-        { id: 'txtCategoria', label: 'Categoria', validacion: valid.validarCategoria},
+        { id: 'selCategoria', label: 'Categoria'},
         { id: 'txtDescripcion', label: 'Descripcion', validacion: valid.validarDescripcion}
     ];
 
@@ -143,7 +141,7 @@ const modificarServicios = async () => {
             nombre: document.getElementById('txtNombre').value,
             duracion: document.getElementById('txtDuracion').value,
             precio: document.getElementById('txtPrecio').value, 
-            categoria: document.getElementById('txtCategoria').value, 
+            categoria: document.getElementById('selCategoria').value, 
             descripcion: document.getElementById('txtDescripcion').value, 
         };
 

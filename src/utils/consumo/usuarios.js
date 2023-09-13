@@ -39,7 +39,7 @@ const listarUsuarios = async () => {
             listaUsuarios.forEach((usuario, index) => {
                 usuario.index = index + 1;
                 usuario.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-                
+                usuario.estado= `<span class="badge badge-success">ACTIVADO</span>`
                 usuario.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verUsuarios(${JSON.stringify(usuario)})'><i class="fas fa-edit"></i></a>
@@ -66,10 +66,10 @@ const crearUsuarios = async () => {
         { id: 'txtApellidos', label: 'Apellido', validacion: valid.validarApellido },
         { id: 'txtCorreo', label: 'Correo', validacion: valid.validarCorreo },
         { id: 'txtUsername', label: 'Username', validacion: valid.validarUsername},
-        { id: 'txtTelefono', label: 'Telefono', validacion: valid.validarTelefono},
+        /* { id: 'txtTelefono', label: 'Telefono', validacion: valid.validarTelefono}, */
         { id: 'selRol', label: 'Rol'},
         { id: 'txtPassword', label: 'Contraseña', validacion: valid.validarPassword},
-        { id: 'txtPasswordRepeat', label: 'Confirmar Contraseña', validacion: valid.validarPassword },
+        { id: 'txtPasswordRepeat', label: 'Confirmar Contraseña', validacion: valid.validarPassword }
     ];
 
     if (!alert.validarCampos(campos)) {
@@ -97,9 +97,9 @@ const crearUsuarios = async () => {
             apellidos: document.getElementById('txtApellidos').value,
             username: document.getElementById('txtUsername').value,
             correo: document.getElementById('txtCorreo').value,
-            telefono: document.getElementById('txtTelefono').value,
+            /* telefono: document.getElementById('txtTelefono').value, */
             rol: document.getElementById('selRol').value,
-            password: txtPassword,
+            password: txtPassword
         };
 
         fetch(url, {
@@ -158,7 +158,7 @@ const modificarUsuarios = async () => {
         return;
     }else{
         
-        const cliente = {
+        const usuarios = {
             _id: document.getElementById('txtID').value,
             nombres: document.getElementById('txtNombres').value,
             apellidos: document.getElementById('txtApellidos').value,
@@ -170,7 +170,7 @@ const modificarUsuarios = async () => {
         fetch(url, {
             method: 'PUT',
             mode: 'cors',
-            body: JSON.stringify(cliente),
+            body: JSON.stringify(usuarios),
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
         })
             .then((resp) => resp.json())

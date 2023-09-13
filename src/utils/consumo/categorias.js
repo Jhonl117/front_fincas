@@ -36,7 +36,7 @@ const listarCategorias = async () => {
         listaCategorias.forEach((categoria, index) => {
             categoria.index = index + 1;
             categoria.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-            
+            categoria.estado= `<span class="badge badge-success">ACTIVADO</span>`
             categoria.botones_accion = `
                 <div class=" d-flex justify-content-around">
                     <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verCategorias(${JSON.stringify(categoria)})'><i class="fas fa-edit" ></i></a>

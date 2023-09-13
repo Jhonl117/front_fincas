@@ -152,6 +152,56 @@ document.addEventListener("DOMContentLoaded", function () {
         addEventListener('click', () => {
             modificarEmpleados()
         })
+
+        document.getElementById('btnGenerar').
+        addEventListener('click', (event) => {
+            event.preventDefault()
+            
+            Swal.fire({
+                title: '¿Estas Seguro?',
+                text: 'Se generar un reporte de los usuarios en PDF',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, Generar',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Error Visualizacion!',
+                        text: 'No se puede generar reporte, no está habilitado.',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            });
+        })
+
+        document.getElementById('btnExcel').
+        addEventListener('click', (event) => {
+            event.preventDefault()
+            
+            Swal.fire({
+                title: '¿Estas Seguro?',
+                text: 'Se generar un reporte de los usuarios en Excel',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, Generar',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Error Visualizacion!',
+                        text: 'No se puede generar reporte, no está habilitado.',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            });
+        })
     }
 
 

@@ -23,6 +23,10 @@ const listarUsuarios = async () => {
             }
             // Puedes agregar más columnas según tus datos
         ],
+        dom: 'Bfrtip',
+        buttons: [
+            'excelHtml5', 'pdfHtml5'
+        ]
     });
 
     // Hacer la solicitud a la API
@@ -226,6 +230,33 @@ document.addEventListener("DOMContentLoaded", function () {
         addEventListener('click', () => {
             modificarUsuarios()
         })
+
+
+        document.getElementById('btnGenerar').
+        addEventListener('click', (event) => {
+            event.preventDefault()
+            
+            Swal.fire({
+                title: '¿Estas Seguro?',
+                text: 'Se generar un reporte de los usuarios',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, Generar',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Error Visualizacion!',
+                        text: 'No se puede generar reporte, no está habilitado.',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            });
+        })
+
 
     }
 

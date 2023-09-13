@@ -141,7 +141,7 @@ router.get('/listarRoles', (req, res) => {
     })
 })
 router.get('/crearRoles', (req, res) => {
-    res.render('configuracion/crearRoles', {
+    res.render('configuracion/formRoles', {
         global: true,
         configuracionR: true
     })

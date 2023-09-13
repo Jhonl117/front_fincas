@@ -1,0 +1,93 @@
+
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Gestion de Roles</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="/listarRoles">Roles</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Crear Rol</li>
+        </ol>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card fondo-form">
+                <div class="card-header fondo-form">
+                    <h4 class="card-title">Formulario Crear Roles</h4>
+                    <hr>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <form id="formModificar">
+                            <div class="form-row">
+                                <div class="form-group col-md-6 mb-4">
+                                    <label>Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="txtNombre" class="form-control" placeholder="Ingrese Nombre para el rol">
+                                        <div class="invalid-feedback" id="txtNombreError"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 mb-4">
+                                    <label>Descripcion</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="txtDescripcion" class="form-control" placeholder="Ingrese descripcion del rol">
+                                        <div class="invalid-feedback" id="txtDescripcionError"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 mb-4">
+                                    <label>Permisos</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
+                                        </div>
+                                        <input type="text" id="txtPermisos" class="form-control" placeholder="Escriba los permisos para el rol ">
+                                        <div class="invalid-feedback" id="txtPermisosError"></div>
+                                    </div>
+                                </div>
+                                {{!-- <div class="form-group col-md-6 mb-4">
+                                    <label>Asignar Rol</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                        </div>
+                                        <select id="selRol" class="form-control">
+                                            <option value="disabled" selected>Seleccionar Rol</option>
+                                            <option value="Usuario">Usuario</option>
+                                            <option value="Empleado">Empleado</option>
+                                            <option value="Administrador">Administrador</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="selRolError"></div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                            <div class="text-center mt-5">
+                                <button type="button" id="btnGuardar" class="btn-sm btn-success mx-2">
+                                    <i class="fas fa-check-square mr-2"></i>Guardar
+                                </button>
+                                <button type="button" id="btnCancelar" class="btn-sm btn-danger mx-2">
+                                    <i class="fas fa-times-circle mr-2"></i>Cancelar
+                                </button>
+                                <button type="button" id="btnReset" class="btn-sm btn-warning mx-2">
+                                    <i class="fas fa-exchange-alt mr-2"></i>Restablecer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+

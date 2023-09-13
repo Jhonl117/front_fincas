@@ -1,15 +1,205 @@
+{{!-- CREAR ROLES --}}
+        <!-- Container Fluid-->
 
-
-
+<div class="container-fluid" id="container-wrapper">
+    <div id="listarUsuarios"></div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800 font-weight-bold">
-                Gestion de Roles
-            </h1>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/panelAdministrativo">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="/listarRoles">Roles</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Listar Roles
-                </li>
-            </ol>
+        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">
+            Gestion de Roles
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="/listarRoles">Roles</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Listar Roles
+            </li>
+        </ol>
     </div>
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-start mb-4">
+                        <a class="btn btn-primary btn-sm mr-2 font-weight-bold" href="/crearRoles">
+                            <i class="fas fa-user icono mr-3 "></i>Crear Roles</a>
+                        {{!-- <button id="allMonthButton" class="btn btn-secondary ml-4 btn-sm font-weight-bold"> --}}
+                            {{!-- <i class="fas fa-download mr-3"></i>Generar Reporte</button> --}}
+                    </div>
+                    <div class="table-responsive pt-3">
+                        <table class="table table-bordered rounded text-center" id="dataTable">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre de Rol</th>
+                                    <th>Descripcion</th>
+                                    <th>Permisos</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Modificar -->
+    <div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelLogout"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card fondo-form">
+                                <div class="card-header fondo-form">
+                                    <h4 class="card-title">Modificar Datos de Rol</h4>
+                                    <hr>
+                                </div>
+                                <div class="card-body">
+                                    <div class="basic-form">
+                                        <form id="formModificar">
+
+                                            <div class="form-row">
+                                                <input type="text" hidden id="txtID">
+                                                <div class="form-group col-md-6 mb-4">
+                                                    <label>Nombre</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                        </div>
+                                                        <input type="text" id="txtNombre" class="form-control" placeholder="Nombre del Rol">
+                                                        <div class="invalid-feedback" id="txtNombreError"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6 mb-4">
+                                                    <label>Descripcion</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                        </div>
+                                                        <input type="text" id="txtDescripcion" class="form-control" placeholder="Descripcion del rol">
+                                                        <div class="invalid-feedback" id="txtDescripcionError"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6 mb-4">
+                                                    <label>Permisos</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
+                                                        </div>
+                                                        <input type="text" id="txtPermisos" class="form-control" placeholder="Permisos del rol">
+                                                        <div class="invalid-feedback" id="txtPermisosError"></div>
+                                                    </div>
+                                                </div>
+                                                {{!-- <div class="form-group col-md-8 mx-auto mb-4">
+                                                    <label>Asignar Rol</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                                        </div>
+                                                        <select id="selRol" class="form-control">
+                                                            <option value="disabled" selected>Seleccionar Rol</option>
+                                                            <option value="Usuario">Usuario</option>
+                                                            <option value="Empleado">Empleado</option>
+                                                            <option value="Administrador">Administrador</option>
+                                                        </select>
+                                                        <div class="invalid-feedback" id="selRolError"></div>
+                                                    </div>
+                                                </div> --}}
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="mt-2">
+                        <button type="submit" class="btn-sm btn-success mx-2" id="btnMdGuardar">
+                            <i class="fas fa-check-square mr-2"></i>Guardar
+                        </button>
+                        <button type="submit" class="btn-sm btn-danger mx-2" data-dismiss="modal">
+                            <i class="fas fa-times-circle mr-2" ></i>Cancelar
+                        </button>
+                        <button type="" class="btn-sm btn-warning mx-2" id="btnMdReset">
+                            <i class="fas fa-exchange-alt mr-2"></i>Restablecer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <script>
+        const url = 'https://backend-valhalla.onrender.com/ruta/roles';
+
+        const eliminarRoles = (id) => {
+
+            Swal.fire({
+                title: '¿Está seguro de realizar la eliminación?',
+                text: 'Esta acción no se puede deshacer.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let roles = {
+                        _id: id,
+                    };
+                    fetch(url, {
+                        method: 'DELETE',
+                        mode: 'cors',
+                        body: JSON.stringify(roles),
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                    })
+                    .then((resp) => resp.json())
+                    .then((json) => {
+                        Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '¡Rol Eliminado Exitosamente!',
+                        text: json.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                        
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        Swal.fire('Error', 'Se produjo un error al eliminar el rol.', 'error');
+                    });
+                }
+            });
+        };
+        
+
+        //==================================
+
+        const verRoles = (roles) => {
+
+            console.log(roles)
+            event.preventDefault();
+
+            document.getElementById('txtID').value = roles._id
+            document.getElementById('txtNombre').value = roles.nombre
+            document.getElementById('txtDescripcion').value = roles.descripcion
+            document.getElementById('txtPermisos').value = roles.permisos         
+        }
+    </script>

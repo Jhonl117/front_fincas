@@ -38,7 +38,11 @@ const listarServicios = async () => {
         listaServicios.forEach((servicio, index) => {
             servicio.index = index + 1;
             servicio.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-            servicio.estado= `<span class="badge badge-success">ACTIVADO</span>`;
+            if (servicio.estado) {
+                servicio.estado = `<button class="btn btn-success cambiar-estado" data-index="${servicio._id}" data-estado="false"><i class="fas fa-check"></i></button>`;
+            } else {
+                servicio.estado = `<button class="btn btn-danger cambiar-estado" data-index="${servicio._id}" data-estado="true"><i class="fas fa-times"></i></button>`;
+            }    
             servicio.botones_accion = `
                 <div class="text-center d-flex justify-content-around">
                     <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verServicios(${JSON.stringify(servicio)})' ><i class="fas fa-edit"></i></a>
@@ -50,11 +54,41 @@ const listarServicios = async () => {
 
         tabla.clear().draw();
         tabla.rows.add(listaServicios).draw(); 
+
+        tabla.on('click', '.cambiar-estado', function () {
+            const button = this;
+            const userId = button.getAttribute('data-index');
+            const newEstado = button.getAttribute('data-estado');
+    
+            cambiarEstado(userId, newEstado);
+            });
     })
+
     .catch(function (error) {
         console.error('Error:', error);
     });
 }
+// =============================================================================
+
+function cambiarEstado(userId, newEstado) {
+
+    const servicios = {
+        _id: userId,
+        estado:newEstado,
+    };
+
+    fetch(url, {
+        method: 'PUT',
+        mode: 'cors',
+        body: JSON.stringify(servicios),
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    })
+        .then((resp) => resp.json())
+            setTimeout(() => {
+            window.location.href = '/listarServicios';
+        }, 2000);
+}      
+
 
 // =============================================================================
 

@@ -38,7 +38,11 @@ const listarRoles = async () => {
             listaRoles.forEach((roles, index) => {
                 roles.index = index + 1;
                 roles.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-                roles.estado= `<span class="badge badge-success">ACTIVADO</span>`
+                if (roles.estado) {
+                    roles.estado = `<button class="btn btn-success cambiar-estado" data-index="${roles._id}" data-estado="false"><i class="fas fa-check"></i></button>`;
+                } else {
+                    roles.estado = `<button class="btn btn-danger cambiar-estado" data-index="${roles._id}" data-estado="true"><i class="fas fa-times"></i></button>`;
+                }    
                 roles.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verRoles(${JSON.stringify(roles)})'><i class="fas fa-edit"></i></a>
@@ -49,11 +53,39 @@ const listarRoles = async () => {
 
             tabla.clear().draw();
             tabla.rows.add(listaRoles).draw(); 
+
+            tabla.on('click', '.cambiar-estado', function () {
+                const button = this;
+                const userId = button.getAttribute('data-index');
+                const newEstado = button.getAttribute('data-estado');
+        
+                cambiarEstado(userId, newEstado);
+                });
         })
         .catch(function (error) {
             console.error('Error:', error);
         });
 }
+
+// ================================================================
+function cambiarEstado(userId, newEstado) {
+
+    const configuracion = {
+        _id: userId,
+        estado:newEstado,
+    };
+
+    fetch(url, {
+        method: 'PUT',
+        mode: 'cors',
+        body: JSON.stringify(configuracion),
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    })
+        .then((resp) => resp.json())
+            setTimeout(() => {
+            window.location.href = '/listarRoles';
+        }, 2000);
+}      
 
 // ================================================================
 

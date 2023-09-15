@@ -47,7 +47,7 @@ const listarUsuarios = async () => {
                 usuario.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verUsuarios(${JSON.stringify(usuario)})'><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger" onclick="eliminarUsuarios('${usuario._id}')"><i class="fas fa-trash-alt"></i></a>
+                        <a href="#" class="btn btn-danger btnAnderson" data-index="${usuario._id}"><i class="fas fa-trash-alt"></i></a>
                         <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
                     </div>
                 `;
@@ -64,13 +64,16 @@ const listarUsuarios = async () => {
 
                 cambiarEstado(userId, newEstado);
             });
+
+            tabla.on('click', '.btnAnderson', function () {
+                const button = this
+                const userID = button.getAttribute('data-index');
+                
+                eliminarUsuarios(userID)
+            })
         })
 
-        document.getElementById('btnUpdate').
-        addEventListener('click', (event) => {
-            const usuario = JSON.parse(event.target.dataset.usuario)
-            verUsuarios(usuario)
-        }) 
+        
 
         .catch(function (error) {
             console.error('Error:', error);
@@ -96,6 +99,50 @@ function cambiarEstado(userId, newEstado) {
             window.location.href = '/listarUsuarios';
         }, 2000);
 }      
+
+
+const eliminarUsuarios = (id) => {
+
+    Swal.fire({
+        title: '¿Está seguro de realizar la eliminación?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let usuario = {
+                _id: id,
+            };
+            fetch(url, {
+                method: 'DELETE',
+                mode: 'cors',
+                body: JSON.stringify(usuario),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            })
+            .then((resp) => resp.json())
+            .then((json) => {
+                Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '¡Usuario Eliminado Exitosamente!',
+                text: json.msg,
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'Se produjo un error al eliminar el usuario.', 'error');
+            });
+        }
+    });
+};
 
 // ================================================================
 

@@ -24,7 +24,7 @@
                         <a class="btn btn-primary btn-sm mr-2 font-weight-bold" href="/crearUsuario">
                             <i class="fas fa-user icono mr-3 "></i>Crear Usuario</a>
                         <button id="btnGenerar" class="btn btn-secondary ml-4 btn-sm font-weight-bold">
-                            <i class="fas fa-download mr-3"></i>Generar Reporte</button>
+                            <i class="fas fa-download mr-3"></i>Generar Pdf</button>
                     </div>
                     <div class="table-responsive pt-3">
                         <table class="table table-bordered rounded text-center" id="dataTable">
@@ -276,17 +276,5 @@
 
         //==================================
 
-        const verUsuarios = (usuarios) => {
-
-            console.log(usuarios)
-            event.preventDefault();
-
-            document.getElementById('txtID').value = usuarios._id
-            document.getElementById('txtNombres').value = usuarios.nombres
-            document.getElementById('txtApellidos').value = usuarios.apellidos
-            document.getElementById('txtUsername').value = usuarios.username
-            document.getElementById('txtCorreo').value= usuarios.correo
-            document.getElementById('selRol').value = usuarios.rol
-                
-        }
+        
     </script>

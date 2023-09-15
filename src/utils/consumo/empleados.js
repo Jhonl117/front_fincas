@@ -14,8 +14,8 @@ const listarEmpleados = async () => {
             { "data": "numeroDocumento" },
             { "data": "nombres" },
             { "data": "apellidos" },
-            { "data": "genero" }, 
-            { "data": "telefono" },
+            { "data": "telefono" }, 
+            { "data": "genero" },
             {   // Columna de botones de acción
                 "data": "botones_accion",
             }

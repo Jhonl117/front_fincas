@@ -23,10 +23,7 @@ const listarUsuarios = async () => {
             }
             // Puedes agregar más columnas según tus datos
         ],
-        dom: 'Bfrtip',
-        buttons: [
-            'excelHtml5', 'pdfHtml5'
-        ]
+        
     });
 
     // Hacer la solicitud a la API
@@ -46,7 +43,7 @@ const listarUsuarios = async () => {
                 usuario.estado= `<span class="badge badge-success">ACTIVADO</span>`
                 usuario.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verUsuarios(${JSON.stringify(usuario)})'><i class="fas fa-edit"></i></a>
+                        <a href="#" id="btnUpdate" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verUsuarios(${JSON.stringify(usuario)})'><i class="fas fa-edit"></i></a>
                         <a href="#" class="btn btn-danger" onclick="eliminarUsuarios('${usuario._id}')"><i class="fas fa-trash-alt"></i></a>
                         <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
                     </div>
@@ -55,6 +52,14 @@ const listarUsuarios = async () => {
 
             tabla.clear().draw();
             tabla.rows.add(listaUsuarios).draw(); 
+
+            
+            document.getElementById('btnUpdate').
+            addEventListener('click', (event) => {
+                const usuario = JSON.parse(event.target.dataset.usuario)
+                verUsuarios(usuario)
+            }) 
+
         })
         .catch(function (error) {
             console.error('Error:', error);
@@ -62,6 +67,22 @@ const listarUsuarios = async () => {
 }
 
 // ================================================================
+
+const verUsuarios = (usuarios) => {
+
+    console.log(usuarios)
+    event.preventDefault();
+
+    document.getElementById('txtID').value = usuarios._id
+    document.getElementById('txtNombres').value = usuarios.nombres
+    document.getElementById('txtApellidos').value = usuarios.apellidos
+    document.getElementById('txtUsername').value = usuarios.username
+    document.getElementById('txtCorreo').value= usuarios.correo
+    document.getElementById('selRol').value = usuarios.rol
+        
+}
+
+// ==============================================================
 
 const crearUsuarios = async () => {
 

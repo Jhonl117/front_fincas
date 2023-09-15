@@ -25,8 +25,11 @@
   },
   "homepage": "https://github.com/JaderM28/FrontEnd_Valhalla#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
+    "express-handlebars-layouts": "^1.0.0",
+    "handlebars-layouts": "^3.1.4",
     "path": "^0.12.7"
   },
   "devDependencies": {

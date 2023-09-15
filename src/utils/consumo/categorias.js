@@ -36,7 +36,11 @@ const listarCategorias = async () => {
         listaCategorias.forEach((categoria, index) => {
             categoria.index = index + 1;
             categoria.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-            categoria.estado= `<span class="badge badge-success">ACTIVADO</span>`
+            if (categoria.estado) {
+                categoria.estado = `<button class="btn btn-success cambiar-estado" data-index="${categoria._id}" data-estado="false"><i class="fas fa-check"></i></button>`;
+            } else {
+                categoria.estado = `<button class="btn btn-danger cambiar-estado" data-index="${categoria._id}" data-estado="true"><i class="fas fa-times"></i></button>`;
+            }      
             categoria.botones_accion = `
                 <div class=" d-flex justify-content-around">
                     <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verCategorias(${JSON.stringify(categoria)})'><i class="fas fa-edit" ></i></a>
@@ -47,11 +51,38 @@ const listarCategorias = async () => {
 
         tabla.clear().draw();
         tabla.rows.add(listaCategorias).draw(); 
+
+        tabla.on('click', '.cambiar-estado', function () {
+            const button = this;
+            const userId = button.getAttribute('data-index');
+            const newEstado = button.getAttribute('data-estado');
+
+            cambiarEstado(userId, newEstado);
+        });
     })
     .catch(function (error) {
         console.error('Error:', error);
     });
 }
+// Función para cambiar el estado del usuario
+function cambiarEstado(userId, newEstado) {
+
+    const categorias = {
+        _id: userId,
+        estado:newEstado,
+    };
+
+    fetch(url, {
+        method: 'PUT',
+        mode: 'cors',
+        body: JSON.stringify(categorias),
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    })
+        .then((resp) => resp.json())
+            setTimeout(() => {
+            window.location.href = '/listarCategorias';
+        }, 2000);
+}      
 
 
 // ================================================================

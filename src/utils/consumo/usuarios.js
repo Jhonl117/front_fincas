@@ -40,14 +40,14 @@ const listarUsuarios = async () => {
                 usuario.index = index + 1;
                 usuario.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
                 if (usuario.estado) {
-                    usuario.estado = `<button class="btn btn-success cambiar-estado" data-index="${usuario._id}" data-estado="false"><i class="fas fa-check"></i></button>`;
+                    usuario.estado = `<button class="btn btn-success cambiar-estado" data-index="${usuario._id}" data-estado="false"><i class="fas fa-toggle-off"></i></button>`;
                 } else {
-                    usuario.estado = `<button class="btn btn-danger cambiar-estado" data-index="${usuario._id}" data-estado="true"><i class="fas fa-times"></i></button>`;
+                    usuario.estado = `<button class="btn btn-danger cambiar-estado" data-index="${usuario._id}" data-estado="true"><i class="fas fa-toggle-on"></i></button>`;
                 }                
                 usuario.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verUsuarios(${JSON.stringify(usuario)})'><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btnAnderson" data-index="${usuario._id}"><i class="fas fa-trash-alt"></i></a>
+                        <a href="#" class="btn btn-primary" id="btnUpdate" data-index="${usuario._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit"></i></a>
+                        <a href="#" class="btn btn-danger" id="btnDelete" data-index="${usuario._id}"><i class="fas fa-trash-alt"></i></a>
                         <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
                     </div>
                 `;
@@ -65,11 +65,19 @@ const listarUsuarios = async () => {
                 cambiarEstado(userId, newEstado);
             });
 
-            tabla.on('click', '.btnAnderson', function () {
+            tabla.on('click', '#btnDelete', function () {
                 const button = this
                 const userID = button.getAttribute('data-index');
                 
                 eliminarUsuarios(userID)
+            })
+
+            tabla.on('click', '#btnUpdate', function () {
+                const button = this
+                const userID = button.getAttribute('data-index');
+                document.getElementById('formModificar').reset()
+                
+                verUsuarios(userID)
             })
         })
 
@@ -146,18 +154,27 @@ const eliminarUsuarios = (id) => {
 
 // ================================================================
 
-const verUsuarios = (usuarios) => {
+const verUsuarios = async (usuario) => {
 
-    console.log(usuarios)
-    event.preventDefault();
-
-    document.getElementById('txtID').value = usuarios._id
-    document.getElementById('txtNombres').value = usuarios.nombres
-    document.getElementById('txtApellidos').value = usuarios.apellidos
-    document.getElementById('txtUsername').value = usuarios.username
-    document.getElementById('txtCorreo').value= usuarios.correo
-    document.getElementById('selRol').value = usuarios.rol
-        
+    await fetch(`https://backend-valhalla.onrender.com/ruta/usuarios/${usuario}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+        const usuario = data.usuarioID; 
+        console.log(usuario)
+        document.getElementById('txtID').value = usuario._id;
+        document.getElementById('txtNombres').value = usuario.nombres;
+        document.getElementById('txtApellidos').value = usuario.apellidos;
+        document.getElementById('txtUsername').value = usuario.username;
+        document.getElementById('txtCorreo').value = usuario.correo;
+        document.getElementById('selRol').value = usuario.rol;
+    })
+    .catch((error) => {
+        console.log('Error: ', error);
+    });
 }
 
 // ==============================================================

@@ -40,10 +40,11 @@ const listarUsuarios = async () => {
                 usuario.index = index + 1;
                 usuario.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
                 if (usuario.estado) {
-                    usuario.estado = `<button class="btn btn-success cambiar-estado" data-index="${usuario._id}" data-estado="false"><i class="fas fa-toggle-off"></i></button>`;
-                } else {
-                    usuario.estado = `<button class="btn btn-danger cambiar-estado" data-index="${usuario._id}" data-estado="true"><i class="fas fa-toggle-on"></i></button>`;
-                }                
+                    usuario.estado =`<i class="fas fa-toggle-on toggleSwitch fa-lg" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
+                  } else {
+                    usuario.estado =`<i class="fas fa-toggle-off toggleSwitch fa-lg" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
+                  }
+                  
                 usuario.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
                         <a href="#" class="btn btn-primary" id="btnUpdate" data-index="${usuario._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit"></i></a>
@@ -55,16 +56,28 @@ const listarUsuarios = async () => {
 
             tabla.clear().draw();
             tabla.rows.add(listaUsuarios).draw(); 
+
+            // Cambiar de estado
+            tabla.on('click', '#cambiar-estado', function () {              
+                const userId = this.getAttribute('data-index');
+                let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
+               
+                // Compara la cadena con "true"
+                if (currentEstado === "true") {
+                    this.classList.remove('fa-toggle-on');
+                    this.classList.add('fa-toggle-off');
+                    currentEstado = "false"; // Establece la cadena "false"
+                } else {
+                    this.classList.remove('fa-toggle-off');
+                    this.classList.add('fa-toggle-on');
+                    currentEstado = "true"; // Establece la cadena "true"
+                }
             
-            // Agregar el evento de clic a la tabla
-            tabla.on('click', '.cambiar-estado', function () {
-                const button = this;
-                const userId = button.getAttribute('data-index');
-                const newEstado = button.getAttribute('data-estado');
-
-                cambiarEstado(userId, newEstado);
+                this.setAttribute('data-estado', currentEstado); // Actualiza el atributo data-estado
+                cambiarEstado(userId, currentEstado);
             });
-
+            
+            // Borrar Usuario
             tabla.on('click', '#btnDelete', function () {
                 const button = this
                 const userID = button.getAttribute('data-index');
@@ -80,8 +93,6 @@ const listarUsuarios = async () => {
                 verUsuarios(userID)
             })
         })
-
-        
 
         .catch(function (error) {
             console.error('Error:', error);
@@ -102,13 +113,11 @@ function cambiarEstado(userId, newEstado) {
         body: JSON.stringify(usuarios),
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
     })
-        .then((resp) => resp.json())
-            setTimeout(() => {
-            window.location.href = '/listarUsuarios';
-        }, 2000);
-}      
+}    
 
+// FUNCION PARA CAMBIAR EL BOTON AL HACER CLICK
 
+// -------------------------------------------------
 const eliminarUsuarios = (id) => {
 
     Swal.fire({

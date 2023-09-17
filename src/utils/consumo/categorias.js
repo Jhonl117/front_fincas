@@ -37,10 +37,10 @@ const listarCategorias = async () => {
             categoria.index = index + 1;
             categoria.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
             if (categoria.estado) {
-                categoria.estado = `<button class="btn btn-success cambiar-estado" data-index="${categoria._id}" data-estado="false"><i class="fas fa-check"></i></button>`;
-            } else {
-                categoria.estado = `<button class="btn btn-danger cambiar-estado" data-index="${categoria._id}" data-estado="true"><i class="fas fa-times"></i></button>`;
-            }      
+                categoria.estado =`<i class="fas fa-toggle-on toggleSwitch fa-lg" id="cambiar-estado" data-index="${categoria._id}" data-estado="${categoria.estado}"></i>`;
+              } else {
+                categoria.estado =`<i class="fas fa-toggle-off toggleSwitch fa-lg" id="cambiar-estado" data-index="${categoria._id}" data-estado="${categoria.estado}"></i>`;
+              }     
             categoria.botones_accion = `
                 <div class=" d-flex justify-content-around">
                     <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verCategorias(${JSON.stringify(categoria)})'><i class="fas fa-edit" ></i></a>
@@ -50,21 +50,35 @@ const listarCategorias = async () => {
         });
 
         tabla.clear().draw();
-        tabla.rows.add(listaCategorias).draw(); 
+        tabla.rows.add(listaCategorias).draw();
 
-        tabla.on('click', '.cambiar-estado', function () {
-            const button = this;
-            const userId = button.getAttribute('data-index');
-            const newEstado = button.getAttribute('data-estado');
+        // Cambiar de estado
+        tabla.on('click', '#cambiar-estado', function () {              
+            const userId = this.getAttribute('data-index');
+            let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
+        
+            // Compara la cadena con "true"
+            if (currentEstado === "true") {
+                this.classList.remove('fa-toggle-on');
+                this.classList.add('fa-toggle-off');
+                currentEstado = "false"; // Establece la cadena "false"
+            } else {
+                this.classList.remove('fa-toggle-off');
+                this.classList.add('fa-toggle-on');
+                currentEstado = "true"; // Establece la cadena "true"
+            }
 
-            cambiarEstado(userId, newEstado);
-        });
+            this.setAttribute('data-estado', currentEstado); // Actualiza el atributo data-estado
+            cambiarEstado(userId, currentEstado);
+        })
     })
     .catch(function (error) {
         console.error('Error:', error);
     });
 }
-// Función para cambiar el estado del usuario
+
+// ================================================================
+// Función para cambiar el estado de la categoria
 function cambiarEstado(userId, newEstado) {
 
     const categorias = {
@@ -78,14 +92,9 @@ function cambiarEstado(userId, newEstado) {
         body: JSON.stringify(categorias),
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
     })
-        .then((resp) => resp.json())
-            setTimeout(() => {
-            window.location.href = '/listarCategorias';
-        }, 2000);
-}      
+}    
 
-
-// ================================================================
+// FUNCION PARA CAMBIAR EL BOTON AL HACER CLICK
 
 const crearCategorias = async () => {
 

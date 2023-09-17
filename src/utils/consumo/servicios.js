@@ -39,10 +39,10 @@ const listarServicios = async () => {
             servicio.index = index + 1;
             servicio.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
             if (servicio.estado) {
-                servicio.estado = `<button class="btn btn-success cambiar-estado" data-index="${servicio._id}" data-estado="false"><i class="fas fa-check"></i></button>`;
-            } else {
-                servicio.estado = `<button class="btn btn-danger cambiar-estado" data-index="${servicio._id}" data-estado="true"><i class="fas fa-times"></i></button>`;
-            }    
+                servicio.estado =`<i class="fas fa-toggle-on toggleSwitch fa-lg" id="cambiar-estado" data-index="${servicio._id}" data-estado="${servicio.estado}"></i>`;
+              } else {
+                servicio.estado =`<i class="fas fa-toggle-off toggleSwitch fa-lg" id="cambiar-estado" data-index="${servicio._id}" data-estado="${servicio.estado}"></i>`;
+              }     
             servicio.botones_accion = `
                 <div class="text-center d-flex justify-content-around">
                     <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verServicios(${JSON.stringify(servicio)})' ><i class="fas fa-edit"></i></a>
@@ -55,21 +55,32 @@ const listarServicios = async () => {
         tabla.clear().draw();
         tabla.rows.add(listaServicios).draw(); 
 
-        tabla.on('click', '.cambiar-estado', function () {
-            const button = this;
-            const userId = button.getAttribute('data-index');
-            const newEstado = button.getAttribute('data-estado');
-    
-            cambiarEstado(userId, newEstado);
-            });
-    })
+        // Cambiar de estado
+        tabla.on('click', '#cambiar-estado', function () {              
+            const userId = this.getAttribute('data-index');
+            let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
+        
+            // Compara la cadena con "true"
+            if (currentEstado === "true") {
+                this.classList.remove('fa-toggle-on');
+                this.classList.add('fa-toggle-off');
+                currentEstado = "false"; // Establece la cadena "false"
+            } else {
+                this.classList.remove('fa-toggle-off');
+                this.classList.add('fa-toggle-on');
+                currentEstado = "true"; // Establece la cadena "true"
+            }
 
+            this.setAttribute('data-estado', currentEstado); // Actualiza el atributo data-estado
+            cambiarEstado(userId, currentEstado);
+        })
+    })
     .catch(function (error) {
         console.error('Error:', error);
     });
 }
 // =============================================================================
-
+// Función para cambiar el estado del servicio
 function cambiarEstado(userId, newEstado) {
 
     const servicios = {
@@ -83,13 +94,7 @@ function cambiarEstado(userId, newEstado) {
         body: JSON.stringify(servicios),
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
     })
-        .then((resp) => resp.json())
-            setTimeout(() => {
-            window.location.href = '/listarServicios';
-        }, 2000);
-}      
-
-
+}    
 // =============================================================================
 
 const crearServicios = async () => {

@@ -39,10 +39,10 @@ const listarRoles = async () => {
                 roles.index = index + 1;
                 roles.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
                 if (roles.estado) {
-                    roles.estado = `<button class="btn btn-success cambiar-estado" data-index="${roles._id}" data-estado="false"><i class="fas fa-check"></i></button>`;
-                } else {
-                    roles.estado = `<button class="btn btn-danger cambiar-estado" data-index="${roles._id}" data-estado="true"><i class="fas fa-times"></i></button>`;
-                }    
+                    roles.estado =`<i class="fas fa-toggle-on toggleSwitch fa-lg" id="cambiar-estado" data-index="${roles._id}" data-estado="${roles.estado}"></i>`;
+                  } else {
+                    roles.estado =`<i class="fas fa-toggle-off toggleSwitch fa-lg" id="cambiar-estado" data-index="${roles._id}" data-estado="${roles.estado}"></i>`;
+                  }        
                 roles.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verRoles(${JSON.stringify(roles)})'><i class="fas fa-edit"></i></a>
@@ -54,23 +54,36 @@ const listarRoles = async () => {
             tabla.clear().draw();
             tabla.rows.add(listaRoles).draw(); 
 
-            tabla.on('click', '.cambiar-estado', function () {
-                const button = this;
-                const userId = button.getAttribute('data-index');
-                const newEstado = button.getAttribute('data-estado');
+            // Cambiar de estado
+            tabla.on('click', '#cambiar-estado', function () {              
+            const userId = this.getAttribute('data-index');
+            let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
         
-                cambiarEstado(userId, newEstado);
-                });
+            // Compara la cadena con "true"
+            if (currentEstado === "true") {
+                this.classList.remove('fa-toggle-on');
+                this.classList.add('fa-toggle-off');
+                currentEstado = "false"; // Establece la cadena "false"
+            } else {
+                this.classList.remove('fa-toggle-off');
+                this.classList.add('fa-toggle-on');
+                currentEstado = "true"; // Establece la cadena "true"
+            }
+
+            this.setAttribute('data-estado', currentEstado); // Actualiza el atributo data-estado
+            cambiarEstado(userId, currentEstado);
         })
+    })
         .catch(function (error) {
             console.error('Error:', error);
         });
 }
 
 // ================================================================
+// Función para cambiar el estado del servicio
 function cambiarEstado(userId, newEstado) {
 
-    const configuracion = {
+    const roles = {
         _id: userId,
         estado:newEstado,
     };
@@ -78,14 +91,10 @@ function cambiarEstado(userId, newEstado) {
     fetch(url, {
         method: 'PUT',
         mode: 'cors',
-        body: JSON.stringify(configuracion),
+        body: JSON.stringify(roles),
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
     })
-        .then((resp) => resp.json())
-            setTimeout(() => {
-            window.location.href = '/listarRoles';
-        }, 2000);
-}      
+}    
 
 // ================================================================
 

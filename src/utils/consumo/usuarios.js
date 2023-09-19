@@ -17,11 +17,7 @@ const listarUsuarios = async () => {
             { "data": "rol" },
             { "data": "fecha_registro" }, // Fecha de registro
             { "data": "estado" },
-            {   // Columna de botones de acción
-                "data": "botones_accion",
-                
-            }
-            // Puedes agregar más columnas según tus datos
+            { "data": "botones_accion"}
         ],
     });
 
@@ -40,11 +36,11 @@ const listarUsuarios = async () => {
                 usuario.index = index + 1;
                 usuario.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
                 if (usuario.estado) {
-                    usuario.estado =`<i class="fas fa-toggle-on toggleSwitch fa-lg" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
-                  } else {
-                    usuario.estado =`<i class="fas fa-toggle-off toggleSwitch fa-lg" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
-                  }
-                  
+                    usuario.estado =`<i class="fas fa-toggle-on fa-2x text-success" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
+                } else {
+                    usuario.estado =`<i class="fas fa-toggle-on fa-rotate-180 fa-2x text-danger" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
+                }
+
                 usuario.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
                         <a href="#" class="btn btn-primary" id="btnUpdate" data-index="${usuario._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit"></i></a>
@@ -55,21 +51,21 @@ const listarUsuarios = async () => {
             });
 
             tabla.clear().draw();
-            tabla.rows.add(listaUsuarios).draw(); 
+            tabla.rows.add(listaUsuarios).draw();
 
             // Cambiar de estado
             tabla.on('click', '#cambiar-estado', function () {              
                 const userId = this.getAttribute('data-index');
                 let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
-               
+
                 // Compara la cadena con "true"
                 if (currentEstado === "true") {
-                    this.classList.remove('fa-toggle-on');
-                    this.classList.add('fa-toggle-off');
+                    this.classList.remove('text-success');
+                    this.classList.add('fa-rotate-180', 'text-danger');
                     currentEstado = "false"; // Establece la cadena "false"
                 } else {
-                    this.classList.remove('fa-toggle-off');
-                    this.classList.add('fa-toggle-on');
+                    this.classList.remove('fa-rotate-180', 'text-danger');
+                    this.classList.add('text-success');
                     currentEstado = "true"; // Establece la cadena "true"
                 }
             

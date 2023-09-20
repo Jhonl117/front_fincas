@@ -342,25 +342,24 @@ const modificarUsuarios = async () => {
 
 }
 
-const verUsuarios = async (idEmpleado) => {
+const verUsuarios = async (idUsuario) => {
 
-    await fetch(url+`/${idEmpleado}`, {
+    await fetch(url+`/${idUsuario}`, {
         method: 'GET',
         mode: 'cors',
         headers: {'Content-type': "aplication/json; charset=UTF-8"}
     })
     .then((resp) => resp.json())
     .then((data) => {
-        const empleado = data.empleadoID;
-        console.log(empleado)
-        const fechaFormateada = empleado.fechaNacimiento.split('T')[0];
-        
+        const usuario = data.usuarioID;
+        console.log(usuario)
+  
         /* document.getElementById('txtID').value = usuario._id; */
-        document.getElementById('txtNombres').textContent = usuario.nombres;
-        document.getElementById('txtApellidos').textContent = usuario.apellidos;
-        document.getElementById('txtUsername').textContent = usuario.username;
-        document.getElementById('txtCorreo').textContent = usuario.correo;
-        document.getElementById('selRol').textContent = usuario.rol;
+        document.getElementById('txtVerNombres').textContent = usuario.nombres;
+        document.getElementById('txtVerApellidos').textContent = usuario.apellidos;
+        document.getElementById('txtVerUsername').textContent = usuario.username;
+        document.getElementById('txtVerCorreo').textContent = usuario.correo;
+        document.getElementById('selVerRol').textContent = usuario.rol;
 
     })
     .catch((error) => {

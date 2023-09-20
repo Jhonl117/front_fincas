@@ -8,6 +8,7 @@ export const mostrarError = (campoId, mensaje) => {
     errorDiv.textContent = mensaje;
 };
 
+
 // Funcion para Limpiar Errores
 export const limpiarError = (campoId) => {
     const campo = document.getElementById(campoId);
@@ -15,6 +16,7 @@ export const limpiarError = (campoId) => {
     const errorDiv = document.getElementById(`${campoId}Error`);
     errorDiv.textContent = '';
 }; 
+
 
 // Funcion para Validar Campos
 export const validarCampos = (config) => {

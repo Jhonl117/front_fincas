@@ -147,7 +147,6 @@ const modificarEmpleados = async () => {
 
 const eliminarEmpleados = (id) => {
         
-
     Swal.fire({
         title: '¿Está seguro de realizar la eliminación?',
         text: 'Esta acción no se puede deshacer.',
@@ -204,7 +203,7 @@ const eliminarEmpleados = (id) => {
 
 const verModal = async (empleado) => {
 
-    await fetch(`https://backend-valhalla.onrender.com/ruta/empleados/${empleado}`, {
+    await fetch(url+`/${empleado}`, {
         method: 'GET',
         mode: 'cors',
         headers: { "Content-type": "application/json; charset=UTF-8" }

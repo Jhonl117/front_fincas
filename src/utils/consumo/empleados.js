@@ -1,14 +1,16 @@
 import * as valid from '../validations/expresiones.mjs';
 import * as alert from '../validations/alertas.mjs';
 
+// Se defina la ruta del Api
 const url = 'https://backend-valhalla.onrender.com/ruta/empleados';
 
+// Se crea la funcion ListarEmpleados la cual consume el (Api Ruta Empleados)
 const listarEmpleados = async () => {
     const tabla = $('#dataTable').DataTable({
 
         "bProcessing": true, // Habilita la pantalla de carga
-        "serverSide": false, // Puedes cambiar esto según tus necesidades
-
+        "serverSide": false, 
+// Se determinan las columnas que se van a insertar en  la tabla 
         "columns": [
             { "data": "index" },
             { "data": "numeroDocumento" },
@@ -16,10 +18,7 @@ const listarEmpleados = async () => {
             { "data": "apellidos" },
             { "data": "telefono" }, 
             { "data": "genero" },
-            {   // Columna de botones de acción
-                "data": "botones_accion",
-            }
-            // Puedes agregar más columnas según tus datos
+            { "data": "botones_accion"}
         ],
     });
 
@@ -36,13 +35,11 @@ const listarEmpleados = async () => {
             // Agregar un índice autoincremental y fecha de registro a los datos
             listaEmpleados.forEach((empleado, index) => {
                 empleado.index = index + 1;
-                empleado.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-                
                 empleado.botones_accion = `
                 <div class=" d-flex justify-content-around">
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verEmpleados(${JSON.stringify(empleado)})'><i class="fas fa-edit" ></i></a>
-                    <a href="" class="btn btn-danger" onclick="eliminarEmpleados('${empleado._id}')"><i class="fas fa-trash-alt"></i></a>
-                    <a href="" class="btn btn-warning" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
+                    <a href="" class="btn btn-primary" id="btnUpdate" data-index="${empleado._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit" ></i></a>
+                    <a href="" class="btn btn-danger" id="btnDelete" data-index="${empleado._id}"><i class="fas fa-trash-alt"></i></a>
+                    <a href="" class="btn btn-warning" id="btnVer" data-index="${empleado._id}" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
                     <a href="" class="btn btn-info" data-toggle="modal" data-target="#ServicesModal"><i class="fas fa-cut"></i></a>
                 </div>
                 `;
@@ -50,6 +47,28 @@ const listarEmpleados = async () => {
 
             tabla.clear().draw();
             tabla.rows.add(listaEmpleados).draw(); 
+
+            tabla.on('click', '#btnDelete', function (event){
+                event.preventDefault()
+                const button = this
+                const empleID = button.getAttribute('data-index');
+                eliminarEmpleados(empleID)
+            })
+
+            tabla.on('click', '#btnUpdate', function () {
+                const button = this
+                const empleID = button.getAttribute('data-index');
+                document.getElementById('formModificar').reset()
+                verModal(empleID)
+            })
+
+            tabla.on('click', '#btnVer', function () {
+                const button = this
+                const empleID = button.getAttribute('data-index');
+                document.getElementById('formModificar').reset()
+                verEmpleados(empleID)
+            })
+
         })
         .catch(function (error) {
             console.error('Error:', error);
@@ -125,6 +144,116 @@ const modificarEmpleados = async () => {
             });
     }
 
+}
+
+const eliminarEmpleados = (id) => {
+        
+
+    Swal.fire({
+        title: '¿Está seguro de realizar la eliminación?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let empleado = {
+                _id: id,
+            };
+            fetch(url, {
+                method: 'DELETE',
+                mode: 'cors',
+                body: JSON.stringify(empleado),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            })
+            .then((resp) => resp.json())
+            .then((json) => {
+                Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '¡Empleado Eliminado Exitosamente!',
+                text: json.msg,
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: '¡Empleado Eliminado Exitosamente!',
+                    text: 'Se produjo un error al eliminar el Empleado',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                    
+                
+            });
+        }
+    });
+};
+
+
+const verModal = async (empleado) => {
+
+    await fetch(`https://backend-valhalla.onrender.com/ruta/empleados/${empleado}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+        const empleado = data.empleadoID; 
+        document.getElementById('txtID').value = empleado._id
+        document.getElementById('txtNombres').value = empleado.nombres
+        document.getElementById('txtApellidos').value = empleado.apellidos
+        document.getElementById('txtTelefono').value = empleado.telefono
+        document.getElementById('selDocumento').value = empleado.tipoDocumento
+        document.getElementById('txtNumDocumento').value = empleado.numeroDocumento
+        document.getElementById('txtGenero').value = empleado.genero
+        document.getElementById('txtDireccion').value = empleado.direccion
+    })
+    .catch((error) => {
+        console.log('Error: ', error);
+    });
+}
+
+const verEmpleados = async (idEmpleado) => {
+
+    await fetch(url+`/${idEmpleado}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {'Content-type': "aplication/json; charset=UTF-8"}
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+        const empleado = data.empleadoID;
+        console.log(empleado)
+        const fechaFormateada = empleado.fechaNacimiento.split('T')[0];
+        
+        /* document.getElementById('txtVerID').textContent = empleado._id */
+        document.getElementById('txtVerTipoDocumento').textContent = empleado.tipoDocumento
+        document.getElementById('txtVerNombres').textContent = empleado.nombres
+        document.getElementById('txtVerApellidos').textContent = empleado.apellidos
+        document.getElementById('txtVerTelefono').textContent = empleado.telefono
+        document.getElementById('txtVerNumDocumento').textContent = empleado.numeroDocumento
+        document.getElementById('txtVerFechaNacimiento').textContent = fechaFormateada
+        document.getElementById('txtVerGenero').textContent = empleado.genero
+        document.getElementById('txtVerDireccion').textContent = empleado.direccion
+
+    })
+    .catch((error) => {
+        console.log('Error: ',error)
+    })
 }
 
 

@@ -7,18 +7,16 @@ const listarCategorias = async () => {
     const tabla = $('#dataTable').DataTable({
 
         "bProcessing": true, // Habilita la pantalla de carga
-        "serverSide": false, // Puedes cambiar esto según tus necesidades
+        "serverSide": false, 
 
         "columns": [
             { "data": "index" }, // Índice autoincremental
             { "data": "codigoCategoria" }, 
             { "data": "nombre" },
             { "data": "descripcion" },
+            { "data": "fecha_registro" },
             { "data": "estado" },
-            {   // Columna de botones de acción
-                "data": "botones_accion",
-                
-            }
+            { "data": "botones_accion"}
         ],
     });
 
@@ -35,16 +33,17 @@ const listarCategorias = async () => {
         // Agregar un índice autoincremental y fecha de registro a los datos
         listaCategorias.forEach((categoria, index) => {
             categoria.index = index + 1;
-            categoria.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+            categoria.fecha_registro = new Date().toLocaleDateString('es-ES');
+
             if (categoria.estado) {
-                categoria.estado =`<i class="fas fa-toggle-on toggleSwitch fa-lg" id="cambiar-estado" data-index="${categoria._id}" data-estado="${categoria.estado}"></i>`;
-              } else {
-                categoria.estado =`<i class="fas fa-toggle-off toggleSwitch fa-lg" id="cambiar-estado" data-index="${categoria._id}" data-estado="${categoria.estado}"></i>`;
-              }     
+                categoria.estado =`<i class="fas fa-toggle-on fa-2x text-success" id="cambiar-estado" data-index="${categoria._id}" data-estado="${categoria.estado}"></i>`;
+            } else {
+                categoria.estado =`<i class="fas fa-toggle-on fa-rotate-180 fa-2x text-danger" id="cambiar-estado" data-index="${categoria._id}" data-estado="${categoria.estado}"></i>`;
+            }     
             categoria.botones_accion = `
                 <div class=" d-flex justify-content-around">
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verCategorias(${JSON.stringify(categoria)})'><i class="fas fa-edit" ></i></a>
-                    <a href="" class="btn btn-danger" onclick="eliminarCategorias('${categoria._id}')"><i class="fas fa-trash-alt"></i></a>
+                    <a href="" class="btn btn-primary" id="btnUpdate" data-index="${categoria._id}" data-toggle="modal" data-target="#UpdateModal" onclick='verCategorias(${JSON.stringify(categoria)})'><i class="fas fa-edit" ></i></a>
+                    <a href="" class="btn btn-danger" id="btnDelete" data-index="${categoria._id}"><i class="fas fa-trash-alt"></i></a>
                 </div>
             `;
         });
@@ -59,18 +58,35 @@ const listarCategorias = async () => {
         
             // Compara la cadena con "true"
             if (currentEstado === "true") {
-                this.classList.remove('fa-toggle-on');
-                this.classList.add('fa-toggle-off');
+                this.classList.remove('text-success');
+                this.classList.add('fa-rotate-180', 'text-danger');
                 currentEstado = "false"; // Establece la cadena "false"
             } else {
-                this.classList.remove('fa-toggle-off');
-                this.classList.add('fa-toggle-on');
+                this.classList.remove('fa-rotate-180', 'text-danger');
+                this.classList.add('text-success');
                 currentEstado = "true"; // Establece la cadena "true"
             }
 
             this.setAttribute('data-estado', currentEstado); // Actualiza el atributo data-estado
             cambiarEstado(userId, currentEstado);
         })
+
+        tabla.on('click', '#btnDelete', function (event) {
+            event.preventDefault()
+            const button = this;
+            const categID = button.getAttribute('data-index');
+            eliminarCategorias(categID);
+        })
+
+        tabla.on('click', '#btnUpdate', function () {
+            document.getElementById('formModificar').reset()
+            const button = this;
+            const categID = button.getAttribute('data-index');
+            verCategorias(categID);
+        })
+
+        
+
     })
     .catch(function (error) {
         console.error('Error:', error);
@@ -218,6 +234,85 @@ const modificarCategorias = async () => {
             });
     }
 
+}
+
+// =======================================
+
+const eliminarCategorias = (id) => {
+    
+    Swal.fire({
+        title: '¿Está seguro de realizar la eliminación?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let categoria = {
+                _id: id,
+            };
+            fetch(url, {
+                method: 'DELETE',
+                mode: 'cors',
+                body: JSON.stringify(categoria),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            })
+            .then((resp) => resp.json())
+            .then((json) => {
+                Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '¡Cliente Eliminado Exitosamente!',
+                text: json.msg,
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: '¡Cliente Eliminado Exitosamente!',
+                    text: 'Se produjo un error al eliminar el Cliente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                    
+                
+            });
+        }
+    });
+};
+
+const verCategorias = async (categoria) => {
+
+    await fetch(url+`/${categoria}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+        const categorias = data.categoriaID; 
+        console.log(categorias)
+        document.getElementById('txtID').value = categorias._id
+        document.getElementById('txtNombre').value = categorias.nombre
+        document.getElementById('txtCodigo').value = categorias.codigoCategoria
+        document.getElementById('txtDescripcion').value = categorias.descripcion
+        document.getElementById('txtObservaciones').value = categorias.observaciones
+    })
+    .catch((error) => {
+        console.log('Error: ', error);
+    });
 }
 
 

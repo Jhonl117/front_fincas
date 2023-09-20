@@ -8,19 +8,16 @@ const listarRoles = async () => {
     const tabla = $('#dataTable').DataTable({
 
         "bProcessing": true, // Habilita la pantalla de carga
-        "serverSide": false, // Puedes cambiar esto según tus necesidades
+        "serverSide": false, 
 
         "columns": [
             { "data": "index" }, // Índice autoincremental
             { "data": "nombreRol" },
             { "data": "descripcion" },
             { "data": "permisos" },
+            { "data": "fecha_registro" },
             { "data": "estado" },
-            {   // Columna de botones de acción
-                "data": "botones_accion",
-                
-            }
-            // Puedes agregar más columnas según tus datos
+            { "data": "botones_accion"}
         ],
     });
 
@@ -37,16 +34,16 @@ const listarRoles = async () => {
             // Agregar un índice autoincremental y fecha de registro a los datos
             listaRoles.forEach((roles, index) => {
                 roles.index = index + 1;
-                roles.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+                roles.fecha_registro = new Date().toLocaleDateString('es-ES');
                 if (roles.estado) {
-                    roles.estado =`<i class="fas fa-toggle-on toggleSwitch fa-lg" id="cambiar-estado" data-index="${roles._id}" data-estado="${roles.estado}"></i>`;
-                  } else {
-                    roles.estado =`<i class="fas fa-toggle-off toggleSwitch fa-lg" id="cambiar-estado" data-index="${roles._id}" data-estado="${roles.estado}"></i>`;
-                  }        
+                    roles.estado =`<i class="fas fa-toggle-on fa-2x text-success" id="cambiar-estado" data-index="${roles._id}" data-estado="${roles.estado}"></i>`;
+                } else {
+                    roles.estado =`<i class="fas fa-toggle-on fa-rotate-180 fa-2x text-danger" id="cambiar-estado" data-index="${roles._id}" data-estado="${roles.estado}"></i>`;
+                }        
                 roles.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#UpdateModal" onclick='verRoles(${JSON.stringify(roles)})'><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger" onclick="eliminarRoles('${roles._id}')"><i class="fas fa-trash-alt"></i></a>
+                    <a href="#" class="btn btn-primary" id="btnUpdate" data-index="${roles._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="btn btn-danger" id="btnDelete" data-index="${roles._id}"><i class="fas fa-trash-alt"></i></a>
                     </div>
                 `;
             });
@@ -56,23 +53,40 @@ const listarRoles = async () => {
 
             // Cambiar de estado
             tabla.on('click', '#cambiar-estado', function () {              
-            const userId = this.getAttribute('data-index');
-            let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
+                const userId = this.getAttribute('data-index');
+                let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
         
-            // Compara la cadena con "true"
-            if (currentEstado === "true") {
-                this.classList.remove('fa-toggle-on');
-                this.classList.add('fa-toggle-off');
-                currentEstado = "false"; // Establece la cadena "false"
-            } else {
-                this.classList.remove('fa-toggle-off');
-                this.classList.add('fa-toggle-on');
-                currentEstado = "true"; // Establece la cadena "true"
-            }
+                /// Compara la cadena con "true"
+                if (currentEstado === "true") {
+                    this.classList.remove('text-success');
+                    this.classList.add('fa-rotate-180', 'text-danger');
+                    currentEstado = "false"; // Establece la cadena "false"
+                } else {
+                    this.classList.remove('fa-rotate-180', 'text-danger');
+                    this.classList.add('text-success');
+                    currentEstado = "true"; // Establece la cadena "true"
+                }
 
-            this.setAttribute('data-estado', currentEstado); // Actualiza el atributo data-estado
-            cambiarEstado(userId, currentEstado);
-        })
+                this.setAttribute('data-estado', currentEstado); // Actualiza el atributo data-estado
+                cambiarEstado(userId, currentEstado);
+            })
+
+            // Borrar Usuario
+            tabla.on('click', '#btnDelete', function () {
+                const button = this
+                const userID = button.getAttribute('data-index');
+                
+                eliminarRoles(userID)
+            })
+
+            tabla.on('click', '#btnUpdate', function () {
+                const button = this
+                const userID = button.getAttribute('data-index');
+                document.getElementById('formModificar').reset()
+                
+                verRoles(userID)
+            })
+
     })
         .catch(function (error) {
             console.error('Error:', error);
@@ -216,6 +230,71 @@ const modificarRoles = async () => {
             });
     }
 
+}
+
+const eliminarRoles = (id) => {
+
+    Swal.fire({
+        title: '¿Está seguro de realizar la eliminación?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let roles = {
+                _id: id,
+            };
+            fetch(url, {
+                method: 'DELETE',
+                mode: 'cors',
+                body: JSON.stringify(roles),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            })
+            .then((resp) => resp.json())
+            .then((json) => {
+                Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '¡Rol Eliminado Exitosamente!',
+                text: json.msg,
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'Se produjo un error al eliminar el rol.', 'error');
+            });
+        }
+    });
+};
+
+
+const verRoles = async (usuario) => {
+
+    await fetch(url+`/${usuario}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+        const roles = data.rolID; 
+        console.log(roles)
+        document.getElementById('txtID').value = roles._id
+            document.getElementById('txtNombre').value = roles.nombreRol
+            document.getElementById('txtDescripcion').value = roles.descripcion
+            document.getElementById('txtPermisos').value = roles.permisos 
+    })
+    .catch((error) => {
+        console.log('Error: ', error);
+    });
 }
 
 

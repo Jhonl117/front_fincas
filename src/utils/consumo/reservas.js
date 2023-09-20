@@ -1,22 +1,30 @@
+// Escuchar el evento de clic en el botón "Create event"
+document.querySelector('.save-event').addEventListener('click', function () {
+  // Muestra un SweetAlert de éxito
+  Swal.fire({
+      title: '¡Registro Exitoso!',
+      text: 'Evento creado con éxito',
+      icon: 'success',
+      confirmButtonText: 'OK'
+  });
+});
 
-/* $(document).ready(function() {		
-    $('#calendar').fullCalendar({           			header: {				
-           left: 'prev,next today',
-           center: 'title',
-           right: 'month,basicWeek,basicDay',			 
-       },
-       locale: 'es',
-        monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-       dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-       dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],	
-                               
-//-----Inicio Evento Click
-         dayClick: function(date, jsEvent, view) {
-           $("#txtFecha").val(date.format());
-             $("#ModalEventos").modal();
-       }
-        //-----Fin Evento Click		
-                               
-       });		 // full calendar		
-   });  // function */
+document.querySelector('.delete-event').addEventListener('click', function () {
+  // Muestra un SweetAlert de éxito
+  Swal.fire({
+      title: '¡Eliminacion Exitosa!',
+      text: 'Evento eliminado con éxito',
+      icon: 'success',
+      confirmButtonText: 'OK'
+  });
+});
+
+document.querySelector('.save-event').addEventListener('click', function () {
+  // Muestra un SweetAlert de éxito
+  Swal.fire({
+      title: '¡Modificado con Exito!',
+      text: 'Evento Modificado con éxito',
+      icon: 'success',
+      confirmButtonText: 'OK'
+  });
+});

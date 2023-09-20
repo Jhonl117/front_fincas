@@ -34,7 +34,7 @@ const listarUsuarios = async () => {
             // Agregar un índice autoincremental y fecha de registro a los datos
             listaUsuarios.forEach((usuario, index) => {
                 usuario.index = index + 1;
-                usuario.fecha_registro = new Date().toLocaleDateString('en-US', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+                usuario.fecha_registro = new Date().toLocaleDateString('es-ES');
                 if (usuario.estado) {
                     usuario.estado =`<i class="fas fa-toggle-on fa-2x text-success" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
                 } else {
@@ -45,7 +45,7 @@ const listarUsuarios = async () => {
                     <div class="text-center d-flex justify-content-around">
                         <a href="#" class="btn btn-primary" id="btnUpdate" data-index="${usuario._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit"></i></a>
                         <a href="#" class="btn btn-danger" id="btnDelete" data-index="${usuario._id}"><i class="fas fa-trash-alt"></i></a>
-                        <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
+                        <a href="#" class="btn btn-warning" id="btnVer" data-index="${usuario._id}" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
                     </div>
                 `;
             });

@@ -1,34 +1,34 @@
-! function(e) {
+! function (e) {
     "use strict";
-    var t = function() {
+    var t = function () {
         this.$body = e("body"), this.$modal = e("#event-modal"), this.$event = "#external-events div.external-event", this.$calendar = e("#calendar"), this.$saveCategoryBtn = e(".save-category"), this.$categoryForm = e("#add-category form"), this.$extEvents = e("#external-events"), this.$calendarObj = null
     };
-    t.prototype.onDrop = function(t, n) {
+    t.prototype.onDrop = function (t, n) {
         var a = t.data("eventObject"),
             o = t.attr("data-class"),
             i = e.extend({}, a);
         i.start = n, o && (i.className = [o]), this.$calendar.fullCalendar("renderEvent", i, !0), e("#drop-remove").is(":checked") && t.remove()
-    }, t.prototype.onEventClick = function(t, n, a) {
+    }, t.prototype.onEventClick = function (t, n, a) {
         var o = this,
             i = e("<form></form>");
-        i.append("<label>Change event name</label>"), i.append("<div class='input-group'><input class='form-control' type=text value='" + t.title + "' /><span class='input-group-btn'><button type='submit' class='btn btn-success waves-effect waves-light'><i class='fa fa-check'></i> Save</button></span></div>"), o.$modal.modal({
+        i.append("<label>Cambiar Nombre Reserva</label>"), i.append("<div class='input-group'><input class='form-control' type=text value='" + t.title + "' /><span class='input-group-btn'><button type='submit' class='btn btn-success waves-effect waves-light'><i class='fa fa-check'></i> Guardar</button></span></div>"), o.$modal.modal({
             backdrop: "static"
-        }), o.$modal.find(".delete-event").show().end().find(".save-event").hide().end().find(".modal-body").empty().prepend(i).end().find(".delete-event").unbind("click").on("click", function() {
-            o.$calendarObj.fullCalendar("removeEvents", function(e) {
+        }), o.$modal.find(".delete-event").show().end().find(".save-event").hide().end().find(".modal-body").empty().prepend(i).end().find(".delete-event").unbind("click").on("click", function () {
+            o.$calendarObj.fullCalendar("removeEvents", function (e) {
                 return e._id == t._id
             }), o.$modal.modal("hide")
-        }), o.$modal.find("form").on("submit", function() {
+        }), o.$modal.find("form").on("submit", function () {
             return t.title = i.find("input[type=text]").val(), o.$calendarObj.fullCalendar("updateEvent", t), o.$modal.modal("hide"), !1
         })
-    }, t.prototype.onSelect = function(t, n, a) {
+    }, t.prototype.onSelect = function (t, n, a) {
         var o = this;
         o.$modal.modal({
             backdrop: "static"
         });
         var i = e("<form></form>");
-        i.append("<div class='row'></div>"), i.find(".row").append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Event Name</label><input class='form-control' placeholder='Insert Event Name' type='text' name='title'/></div></div>").append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='category'></select></div></div>").find("select[name='category']").append("<option value='bg-danger'>Danger</option>").append("<option value='bg-success'>Success</option>").append("<option value='bg-dark'>Dark</option>").append("<option value='bg-primary'>Primary</option>").append("<option value='bg-pink'>Pink</option>").append("<option value='bg-info'>Info</option>").append("<option value='bg-warning'>Warning</option></div></div>"), o.$modal.find(".delete-event").hide().end().find(".save-event").show().end().find(".modal-body").empty().prepend(i).end().find(".save-event").unbind("click").on("click", function() {
+        i.append("<div class='row'></div>"), i.find(".row").append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Nombre Reserva</label><input class='form-control' placeholder='Escribir Nombre Reserva' type='text' name='title'/></div></div>").append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Seleccionar Color</label><select class='form-control' name='category'></select></div></div>").find("select[name='category']").append("<option value='bg-danger'>Rojo</option>").append("<option value='bg-success'>Verde</option>").append("<option value='bg-dark'>Oscuro</option>").append("<option value='bg-primary'>Azul</option>").append("<option value='bg-pink'>Rosa</option>").append("<option value='bg-info'>Azul Oscuro</option>").append("<option value='bg-warning'>Amarillo</option></div></div>"), o.$modal.find(".delete-event").hide().end().find(".save-event").show().end().find(".modal-body").empty().prepend(i).end().find(".save-event").unbind("click").on("click", function () {
             i.submit()
-        }), o.$modal.find("form").on("submit", function() {
+        }), o.$modal.find("form").on("submit", function () {
             var e = i.find("input[name='title']").val(),
                 a = (i.find("input[name='beginning']").val(), i.find("input[name='ending']").val(), i.find("select[name='category'] option:checked").val());
             return null !== e && 0 != e.length ? (o.$calendarObj.fullCalendar("renderEvent", {
@@ -37,10 +37,15 @@
                 end: n,
                 allDay: !1,
                 className: a
-            }, !0), o.$modal.modal("hide")) : alert("You have to give a title to your event"), !1
+            }, !0), o.$modal.modal("hide")) : Swal.fire({
+                title: '¡Error Registro!',
+                text: 'La Reserva Debe Tener un Titulo',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            }), !1
         }), o.$calendarObj.fullCalendar("unselect")
-    }, t.prototype.enableDrag = function() {
-        e(this.$event).each(function() {
+    }, t.prototype.enableDrag = function () {
+        e(this.$event).each(function () {
             var t = {
                 title: e.trim(e(this).text())
             };
@@ -50,23 +55,23 @@
                 revertDuration: 0
             })
         })
-    }, t.prototype.init = function() {
+    }, t.prototype.init = function () {
         this.enableDrag();
         var t = new Date,
             n = (t.getDate(), t.getMonth(), t.getFullYear(), new Date(e.now())),
             a = [{
-                title: "Hey!",
+                title: "Corte Sencillo!",
                 start: new Date(e.now() + 158e6),
-                className: "bg-dark"
-            }, {
-                title: "See John Deo",
-                start: n,
-                end: n,
                 className: "bg-danger"
             }, {
-                title: "Buy a Theme",
+                title: "Perfilado Barba",
+                start: n,
+                end: n,
+                className: "bg-info"
+            }, {
+                title: "Tratamiento",
                 start: new Date(e.now() + 338e6),
-                className: "bg-primary"
+                className: "bg-warning"
             }],
             o = this;
         o.$calendarObj = o.$calendar.fullCalendar({
@@ -86,23 +91,23 @@
             droppable: !0,
             eventLimit: !0,
             selectable: !0,
-            drop: function(t) {
+            drop: function (t) {
                 o.onDrop(e(this), t)
             },
-            select: function(e, t, n) {
+            select: function (e, t, n) {
                 o.onSelect(e, t, n)
             },
-            eventClick: function(e, t, n) {
+            eventClick: function (e, t, n) {
                 o.onEventClick(e, t, n)
             }
-        }), this.$saveCategoryBtn.on("click", function() {
+        }), this.$saveCategoryBtn.on("click", function () {
             var e = o.$categoryForm.find("input[name='category-name']").val(),
                 t = o.$categoryForm.find("select[name='category-color']").val();
-            null !== e && 0 != e.length && (o.$extEvents.append('<div class="external-event bg-' + t + '" data-class="bg-' + t + '" style="position: relative;"><i class="fa fa-move"></i>' + e + "</div>"), o.enableDrag())
+            null !== e && 0 != e.length && (o.$extEvents.append('<div class="external-event mb-2 bg-' + t + '" data-class="bg-' + t + '" style="position: relative;"><i class="fa fa-move"></i>' + e + "</div>"), o.enableDrag())
         })
     }, e.CalendarApp = new t, e.CalendarApp.Constructor = t
 }(window.jQuery),
-function(e) {
-    "use strict";
-    e.CalendarApp.init()
-}(window.jQuery);
+    function (e) {
+        "use strict";
+        e.CalendarApp.init()
+    }(window.jQuery);

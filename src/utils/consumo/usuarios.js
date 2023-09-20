@@ -53,7 +53,7 @@ const listarUsuarios = async () => {
             tabla.clear().draw();
             tabla.rows.add(listaUsuarios).draw();
 
-            // Cambiar de estado
+            // Evento Cambiar de Estado
             tabla.on('click', '#cambiar-estado', function () {              
                 const userId = this.getAttribute('data-index');
                 let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
@@ -73,21 +73,31 @@ const listarUsuarios = async () => {
                 cambiarEstado(userId, currentEstado);
             });
             
-            // Borrar Usuario
+            // Evento Borrar Datos Usuarios
             tabla.on('click', '#btnDelete', function () {
                 const button = this
                 const userID = button.getAttribute('data-index');
-                
                 eliminarUsuarios(userID)
             })
 
+            // Evento Modificar Datos Usuarios
             tabla.on('click', '#btnUpdate', function () {
                 const button = this
                 const userID = button.getAttribute('data-index');
+                document.getElementById('formModificar').reset() 
+                verModalUsuarios(userID)
+            })
+
+            // Evento Ver Datos Usuarios
+            tabla.on('click', '#btnVer', function () {
+                const button = this
+                const userID = button.getAttribute('data-index');
                 document.getElementById('formModificar').reset()
-                
                 verUsuarios(userID)
             })
+
+
+
         })
 
         .catch(function (error) {
@@ -111,7 +121,7 @@ function cambiarEstado(userId, newEstado) {
     })
 }    
 
-// FUNCION PARA CAMBIAR EL BOTON AL HACER CLICK
+// 
 
 // -------------------------------------------------
 const eliminarUsuarios = (id) => {
@@ -159,7 +169,7 @@ const eliminarUsuarios = (id) => {
 
 // ================================================================
 
-const verUsuarios = async (usuario) => {
+const verModalUsuarios = async (usuario) => {
 
     await fetch(`https://backend-valhalla.onrender.com/ruta/usuarios/${usuario}`, {
         method: 'GET',
@@ -330,6 +340,32 @@ const modificarUsuarios = async () => {
             });
     }
 
+}
+
+const verUsuarios = async (idEmpleado) => {
+
+    await fetch(url+`/${idEmpleado}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {'Content-type': "aplication/json; charset=UTF-8"}
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+        const empleado = data.empleadoID;
+        console.log(empleado)
+        const fechaFormateada = empleado.fechaNacimiento.split('T')[0];
+        
+        /* document.getElementById('txtID').value = usuario._id; */
+        document.getElementById('txtNombres').textContent = usuario.nombres;
+        document.getElementById('txtApellidos').textContent = usuario.apellidos;
+        document.getElementById('txtUsername').textContent = usuario.username;
+        document.getElementById('txtCorreo').textContent = usuario.correo;
+        document.getElementById('selRol').textContent = usuario.rol;
+
+    })
+    .catch((error) => {
+        console.log('Error: ',error)
+    })
 }
 
 

@@ -1,3 +1,4 @@
+
 ! function (e) {
     "use strict";
     var t = function () {
@@ -109,5 +110,8 @@
 }(window.jQuery),
     function (e) {
         "use strict";
+        moment.locale('es');
         e.CalendarApp.init()
+        
+        $('#calendar').fullCalendar('option', 'locale', 'es');
     }(window.jQuery);

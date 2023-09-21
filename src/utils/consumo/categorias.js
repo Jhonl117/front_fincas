@@ -115,10 +115,30 @@ function cambiarEstado(userId, newEstado) {
 const crearCategorias = async () => {
 
     const campos = [
-        { id: 'txtNombre', label: 'Nombre Categoria', validacion: valid.validarNombre },
-        { id: 'txtCodigo', label: 'Codigo Categoria', validacion: valid.validarCodigo },
-        { id: 'txtDescripcion', label: 'Descripcion Categoria', validacion: valid.validarTextArea},
-        { id: 'txtObservaciones', label: 'Observaciones Categoria', validacion: valid.validarTextArea}
+        { 
+            id: 'txtNombre', 
+            label: 'Nombre Categoria',
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarNombre 
+        },
+        { 
+            id: 'txtCodigo', 
+            label: 'Codigo Categoria',
+            msg: 'el campo debe contener solo letras o numeros , eslace o guion bajo', 
+            validacion: valid.validarCodigo 
+        },
+        { 
+            id: 'txtDescripcion', 
+            label: 'Descripcion Categoria', 
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarTextArea
+        },
+        { 
+            id: 'txtObservaciones', 
+            label: 'Observaciones Categoria', 
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarTextArea
+        }
     ];
 
     if (!alert.validarCampos(campos)) {
@@ -178,10 +198,30 @@ const crearCategorias = async () => {
 const modificarCategorias = async () => {
 
     const campos = [
-        { id: 'txtNombre', label: 'Nombre Categoria', validacion: valid.validarNombre },
-        { id: 'txtCodigo', label: 'Codigo Categoria', validacion: valid.validarCodigo },
-        { id: 'txtDescripcion', label: 'Descripcion Categoria', validacion: valid.validarTextArea},
-        { id: 'txtObservaciones', label: 'Observaciones Categoria', validacion: valid.validarTextArea}
+        { 
+            id: 'txtNombre', 
+            label: 'Nombre Categoria',
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarNombre 
+        },
+        { 
+            id: 'txtCodigo', 
+            label: 'Codigo Categoria',
+            msg: 'el campo debe contener solo letras o numeros , enlace o guion bajo', 
+            validacion: valid.validarCodigo 
+        },
+        { 
+            id: 'txtDescripcion', 
+            label: 'Descripcion Categoria', 
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarTextArea
+        },
+        { 
+            id: 'txtObservaciones', 
+            label: 'Observaciones Categoria', 
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarTextArea
+        }
     ];
 
     if (!alert.validarCampos(campos)) {

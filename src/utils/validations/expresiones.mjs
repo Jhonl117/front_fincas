@@ -50,10 +50,20 @@ export const validarTextArea = (text) => {
 }
 
 export const validarCodigo = (codigo) => {
-    const result = /^[A-Za-z0-9\-_]+$/
+    const result = /^[A-Za-z0-9\-_]+$/;
     return result.test(codigo)
 }
 
-
-
+export const validarPrecio = (precio) => {
+    const result = /^\d+(\.\d{1,3})?$/;
+    return result.test(precio);
+}
+export const validarDuracion = (duracion) => {
+    const result = /^\d+:\d+$/;
+    return result.test(duracion);
+}
+export const validarRol = (rol) => {
+    const result = /^[A-Za-z]+$/;
+    return result.test(rol)
+}
 

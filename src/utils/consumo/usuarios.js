@@ -95,11 +95,7 @@ const listarUsuarios = async () => {
                 document.getElementById('formModificar').reset()
                 verUsuarios(userID)
             })
-
-
-
         })
-
         .catch(function (error) {
             console.error('Error:', error);
         });
@@ -171,7 +167,7 @@ const eliminarUsuarios = (id) => {
 
 const verModalUsuarios = async (usuario) => {
 
-    await fetch(`https://backend-valhalla.onrender.com/ruta/usuarios/${usuario}`, {
+    await fetch(url+`/${usuario}`, {
         method: 'GET',
         mode: 'cors',
         headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -197,14 +193,43 @@ const verModalUsuarios = async (usuario) => {
 const crearUsuarios = async () => {
 
     const campos = [
-        { id: 'txtNombres', label: 'Nombre', validacion: valid.validarNombre },
-        { id: 'txtApellidos', label: 'Apellido', validacion: valid.validarApellido },
-        { id: 'txtCorreo', label: 'Correo', validacion: valid.validarCorreo },
-        { id: 'txtUsername', label: 'Username', validacion: valid.validarUsername},
-        /* { id: 'txtTelefono', label: 'Telefono', validacion: valid.validarTelefono}, */
+        {   
+            id: 'txtNombres',
+            label: 'Nombre',
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarNombre 
+        },
+        { 
+            id: 'txtApellidos',
+            label: 'Apellido',
+            msg: 'el campo debe contener solo letras o caracteres.', 
+            validacion: valid.validarApellido 
+        },
+        { 
+            id: 'txtCorreo', 
+            label: 'Correo', 
+            msg: 'el campo debe tener un formato con un "@" y un dominio correcto.', 
+            validacion: valid.validarCorreo 
+        },
+        { 
+            id: 'txtUsername', 
+            label: 'Username', 
+            msg: 'el campo debe contener entre 3 y 16 caracteres, que pueden ser letras, números o guiones bajos.', 
+            validacion: valid.validarUsername
+        },
         { id: 'selRol', label: 'Rol'},
-        { id: 'txtPassword', label: 'Contraseña', validacion: valid.validarPassword},
-        { id: 'txtPasswordRepeat', label: 'Confirmar Contraseña', validacion: valid.validarPassword }
+        { 
+            id: 'txtPassword', 
+            label: 'Contraseña', 
+            msg: 'el campo debe contener al menos 8 caracteres, incluyendo mayúsculas y números.', 
+            validacion: valid.validarPassword
+        },
+        { 
+            id: 'txtPasswordRepeat', 
+            label: 'Confirmar Contraseña', 
+            msg: 'el campo debe contener al menos 8 caracteres, incluyendo mayúsculas y números.', 
+            validacion: valid.validarPassword 
+        }
     ];
 
     if (!alert.validarCampos(campos)) {
@@ -282,11 +307,31 @@ const crearUsuarios = async () => {
 const modificarUsuarios = async () => {
 
     const campos = [
-        { id: 'txtNombres', label: 'Nombres', validacion: valid.validarNombre },
-        { id: 'txtApellidos', label: 'Apellidos', validacion: valid.validarApellido },
-        { id: 'txtUsername', label: 'Telefono', validacion: valid.validarUsername},
-        { id: 'txtCorreo', label: 'Tipo Documento', validacion: valid.validarCorreo},
-        { id: 'selRol', label: 'Numero Documento'},
+        {   
+            id: 'txtNombres',
+            label: 'Nombre',
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarNombre 
+        },
+        { 
+            id: 'txtApellidos',
+            label: 'Apellido',
+            msg: 'el campo debe contener solo letras o caracteres.', 
+            validacion: valid.validarApellido 
+        },
+        { 
+            id: 'txtCorreo', 
+            label: 'Correo', 
+            msg: 'el campo debe tener un formato con un "@" y un dominio correcto.', 
+            validacion: valid.validarCorreo 
+        },
+        { 
+            id: 'txtUsername', 
+            label: 'Username', 
+            msg: 'el campo debe contener entre 3 y 16 caracteres, que pueden ser letras, números o guiones bajos.', 
+            validacion: valid.validarUsername
+        },
+        { id: 'selRol', label: 'Rol'},
     ];
 
     if (!alert.validarCampos(campos)) {

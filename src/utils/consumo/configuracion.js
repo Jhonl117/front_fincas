@@ -115,9 +115,24 @@ function cambiarEstado(userId, newEstado) {
 const crearRoles = async () => {
 
     const campos = [
-        { id: 'txtNombre', label: 'Nombre del Rol', validacion: valid.validarNombre },
-        { id: 'txtDescripcion', label: 'Descripcion del Rol'},
-        { id: 'txtPermisos', label: 'Permisos del Rol'}
+        { 
+            id: 'txtNombre', 
+            label: 'Nombre del Rol', 
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarNombre 
+        },
+        { 
+            id: 'txtDescripcion', 
+            label: 'Descripcion del Rol',
+            msg: 'el campo debe contener solo letras.',
+            validacion: valid.validarTextArea
+        },
+        { 
+            id: 'txtPermisos', 
+            label: 'Permisos del Rol',
+            msg: 'el campo debe contener solo letras.',
+            validacion: valid.validarRol
+        }
         // falta validad descripcion y permisos
     ];
 
@@ -176,9 +191,24 @@ const crearRoles = async () => {
 const modificarRoles = async () => {
 
     const campos = [
-        { id: 'txtNombre', label: 'Nombre del Rol', validacion: valid.validarNombre },
-        { id: 'txtDescripcion', label: 'Descripcion del Rol'},
-        { id: 'txtPermisos', label: 'Permisos del Rol'}
+        { 
+            id: 'txtNombre', 
+            label: 'Nombre del Rol', 
+            msg: 'el campo debe contener solo letras o caracteres.',
+            validacion: valid.validarNombre 
+        },
+        { 
+            id: 'txtDescripcion', 
+            label: 'Descripcion del Rol',
+            msg: 'el campo debe contener solo letras.',
+            validacion: valid.validarTextArea
+        },
+        { 
+            id: 'txtPermisos', 
+            label: 'Permisos del Rol',
+            msg: 'el campo debe contener solo letras.',
+            validacion: valid.validarRol
+        }
     ];
 
     if (!alert.validarCampos(campos)) {

@@ -19,14 +19,14 @@ export const limpiarError = (campoId) => {
 
 
 // Funcion para Validar Campos
-export const validarCampos = (config) => {
-    for (const campo of config) {
+export const validarCampos = (campos) => {
+    for (const campo of campos) {
         const valor = document.getElementById(campo.id).value;
         if (!valor || valor === 'disabled') {
             mostrarError(campo.id, `Por favor, complete el campo ${campo.label}.`);
             return false;
         } else if (campo.validacion && !campo.validacion(valor)) {
-            mostrarError(campo.id, `Por favor, ingrese un(a) ${campo.label} válido(a).`);
+            mostrarError(campo.id, `Por favor, ${campo.msg}`);
             return false;
         } else {
             limpiarError(campo.id);

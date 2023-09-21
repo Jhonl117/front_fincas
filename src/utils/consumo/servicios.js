@@ -174,11 +174,34 @@ const crearServicios = async () => {
 const modificarServicios = async () => {
 
     const campos = [
-        { id: 'txtNombre', label: 'Nombres', validacion: valid.validarNombre },
-        { id: 'txtDuracion', label: 'Duracion', validacion: valid.validarDuracion},
-        { id: 'txtPrecio', label: 'Precio', validacion: valid.validarPrecio},
-        { id: 'selCategoria', label: 'Categoria'},
-        { id: 'txtDescripcion', label: 'Descripcion', validacion: valid.validarDescripcion}
+        {
+             id: 'txtNombre', 
+             label: 'Nombres', 
+             msg: 'el campo debe contener solo letras o caracteres.',
+             validacion: valid.validarNombre 
+        },
+        { 
+            id: 'txtDuracion', 
+            label: 'Duracion',
+            msg: 'el campo debe contener solo letras o caracteres.',  
+            validacion: valid.validarDuracion
+        },
+        { 
+            id: 'txtPrecio',
+            label: 'Precio',
+            msg: 'el campo debe contener solo numeros.',  
+            validacion: valid.validarPrecio
+        },
+        { 
+            id: 'selCategoria', 
+            label: 'Categoria'
+        },
+        { 
+            id: 'txtDescripcion', 
+            label: 'Descripcion',
+            msg: 'el campo debe contener solo letras o caracteres.', 
+            validacion: valid.validarTextArea
+    }
     ];
 
     if (!alert.validarCampos(campos)) {

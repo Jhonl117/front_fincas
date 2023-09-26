@@ -29,22 +29,16 @@ router.get('/panelAdministrativo', (req, res) => {
 
 
 // ================================= \\
-// Rutas Usuarios
+// Rutas Fincas
 
-router.get('/listarUsuarios', (req, res) => {
-    res.render('usuarios/listarUsuarios', {
+router.get('/listarFincas', (req, res) => {
+    res.render('fincas/listarFincas', {
         global: true,
         tabla: true,
-        usuarioR: true
+        clienteR: true
     })
 })
 
-router.get('/crearUsuario', (req, res) => {
-    res.render('usuarios/formUsuarios', {
-        global: true,
-        usuarioR: true
-    })
-})
 
 
 // ================================= \\

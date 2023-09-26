@@ -1,16 +1,16 @@
 
         <!-- Container Fluid-->
 <div class="container-fluid" id="container-wrapper">
-    <div id="listarUsuarios"></div>
+    <div id="listarFincas"></div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 font-weight-bold">
-            Gestión de Usuarios
+            Gestión de Fincas
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="/listarUsuarios">Usuarios</a></li>
+            <li class="breadcrumb-item"><a href="/listarFincas">Fincas</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-                Listar Usuarios
+                Listar Fincas
             </li>
         </ol>
     </div>
@@ -21,8 +21,8 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex justify-content-start mb-4">
-                        <a class="btn btn-primary btn-sm mr-2 font-weight-bold" href="/crearUsuario">
-                            <i class="fas fa-user icono mr-3 "></i>Crear Usuario</a>
+                        <a class="btn btn-primary btn-sm mr-2 font-weight-bold" href="/registrarFinca">
+                            <i class="fas fa-user icono mr-3 "></i>Registrar Finca</a>
                         <button id="btnGenerar" class="btn btn-secondary ml-4 btn-sm font-weight-bold">
                             <i class="fas fa-download mr-3"></i>Generar Pdf</button>
                     </div>
@@ -31,10 +31,10 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Usuario</th>
-                                    <th>Correo Electronico</th>
-                                    <th>Rol</th>
-                                    <th>Fecha Registro</th>
+                                    <th>Nombre</th>
+                                    <th>Area</th>
+                                    <th>Valor</th>
+                                    <th>Cultivos</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -66,7 +66,7 @@
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card fondo-form">
                                 <div class="card-header fondo-form">
-                                    <h4 class="card-title">Modificar Datos Usuario</h4>
+                                    <h4 class="card-title">Modificar Datos Finca</h4>
                                     <hr>
                                 </div>
                                 <div class="card-body">
@@ -76,59 +76,43 @@
                                             <div class="form-row">
                                                 <input type="text" hidden id="txtID">
                                                 <div class="form-group col-md-6 mb-4">
-                                                    <label>Nombres</label>
+                                                    <label>Nombre</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                         </div>
-                                                        <input type="text" id="txtNombres" class="form-control" placeholder="Nombres Completos">
-                                                        <div class="invalid-feedback" id="txtNombresError"></div>
+                                                        <input type="text" id="txtNombre" class="form-control" placeholder="Nombre de la Finca">
+                                                        <div class="invalid-feedback" id="txtNombreError"></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-6 mb-4">
-                                                    <label>Apellidos</label>
+                                                    <label>Área</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                         </div>
-                                                        <input type="text" id="txtApellidos" class="form-control" placeholder="Apellidos Completos">
-                                                        <div class="invalid-feedback" id="txtApellidosError"></div>
+                                                        <input type="text" id="txtArea" class="form-control" placeholder="Área">
+                                                        <div class="invalid-feedback" id="txtAreaError"></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-6 mb-4">
-                                                    <label>Correo Electronico</label>
+                                                    <label>Valor</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
                                                         </div>
-                                                        <input type="email" id="txtCorreo" class="form-control" placeholder="Escribir Correo Electronico">
-                                                        <div class="invalid-feedback" id="txtCorreoError"></div>
+                                                        <input type="text" id="txtValor" class="form-control" placeholder="Escribir Valor">
+                                                        <div class="invalid-feedback" id="txtValorError"></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-6 mb-4">
-                                                    <label>Nombre Usuario</label>
+                                                    <label>Cultivos</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                         </div>
-                                                        <input type="text" id="txtUsername" class="form-control" placeholder="Escribir Nombre Usuario">
-                                                        <div class="invalid-feedback" id="txtUsernameError"></div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="form-group col-md-8 mx-auto mb-4">
-                                                    <label>Asignar Rol</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                                                        </div>
-                                                        <select id="selRol" class="form-control">
-                                                            <option value="disabled" selected>Seleccionar Rol</option>
-                                                            <option value="Usuario">Usuario</option>
-                                                            <option value="Empleado">Empleado</option>
-                                                            <option value="Administrador">Administrador</option>
-                                                        </select>
-                                                        <div class="invalid-feedback" id="selRolError"></div>
+                                                        <input type="text" id="txtCultivos" class="form-control" placeholder="Cultivos">
+                                                        <div class="invalid-feedback" id="txtCultivosError"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -171,34 +155,34 @@
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card fondo-form">
                                 <div class="card-header fondo-form">
-                                    <h4 class="card-title">Datos del Usuario</h4>
+                                    <h4 class="card-title">Datos de la Finca</h4>
                                     <hr>
                                 </div>
                                 <div class="container pb-5">
                                     <div class="row flex-md-row align-items-center">
                                         <div class="col-md-4">
                                         <p class=" h4 text-center font-weight-bold mb-3">Foto</p>
-                                        <img src="img/boy.png" alt="Imagen" class="img-fluid">
+                                        <img src="img/insertIMG.png" alt="Imagen" class="img-fluid">
                                         <p class=" h4 text-center font-weight-bold mt-3" id="selVerRol"></p>
                                         </div>
                                         <div class="col-mdl-6 mx-auto">
                                             <div class=" pt-3 text-center">
                                                 <table class="table table-bordered rounded">
                                                     <tr class="py-2">
-                                                        <th scope="row" class="bg-navbar">Nombres</th>
-                                                        <td class="bg-white" id="txtVerNombres"></td>
+                                                        <th scope="row" class="bg-navbar">Nombre</th>
+                                                        <td class="bg-white" id="txtVerNombre"></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row" class="bg-navbar">Apellidos</th>
+                                                        <th scope="row" class="bg-navbar">Área</th>
                                                         <td class="bg-white" id="txtVerApellidos"></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row" class="bg-navbar">Username</th>
-                                                        <td class="bg-white" id="txtVerUsername"></td>
+                                                        <th scope="row" class="bg-navbar">Valor</th>
+                                                        <td class="bg-white" id="txtVerValor"></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row" class="bg-navbar">Correo</th>
-                                                        <td class="bg-white" id="txtVerCorreo"></td>
+                                                        <th scope="row" class="bg-navbar">Cultivos</th>
+                                                        <td class="bg-white" id="txtVerCultivos"></td>
                                                     </tr>
                                                 </table>
                                             </div>

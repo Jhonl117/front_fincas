@@ -2,13 +2,13 @@
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 font-weight-bold">
-            Gestión de Empleados
+            Registro de Fincas
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/panelAdministrativo">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="/listarEmpleados">Empleados</a></li>
+            <li class="breadcrumb-item"><a href="/listarFincas">Empleados</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-                Listar Empleados
+                Listar Fincas
             </li>
         </ol>
     </div>
@@ -29,12 +29,10 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>ID</th>
-                                    <th>N° Documento</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Teléfono</th>
-                                    <th>Género</th>
-                                    <th>Acciones</th>
+                                    <th>Nombre</th>
+                                    <th>Área</th>
+                                    <th>Valor</th>
+                                    <th>Cultivos</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,7 +62,7 @@
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card fondo-form">
                                 <div class="card-header fondo-form">
-                                    <h4 class="card-title">Modificar Datos del Cliente</h4>
+                                    <h4 class="card-title">Modificar Datos de la finca</h4>
                                     <hr>
                                 </div>
                                 <div class="card-body">
@@ -74,18 +72,18 @@
                                             <div class="form-row">
                                                 <input type="text" hidden id="txtID">
                                                 <div class="form-group col-md-6 mb-4">
-                                                    <label>Nombres</label>
+                                                    <label>Nombre</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i
                                                                     class="fas fa-user"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control" placeholder="Nombres Completos" id="txtNombres">
-                                                        <div class="invalid-feedback" id="txtNombresError"></div>
+                                                        <input type="text" class="form-control" placeholder="Nombre" id="txtNombre">
+                                                        <div class="invalid-feedback" id="txtNombreError"></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-6 mb-4">
-                                                    <label>Apellidos</label>
+                                                    <label>Area</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i
@@ -239,8 +237,8 @@
                                                         <td class="bg-white" id="txtVerNumDocumento"></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row" class="bg-navbar">Nombres</th>
-                                                        <td class="bg-white" id="txtVerNombres"></td>
+                                                        <th scope="row" class="bg-navbar">Nombre</th>
+                                                        <td class="bg-white" id="txtVerNombre"></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row" class="bg-navbar">Apellidos</th>

@@ -2,9 +2,9 @@
 import * as valid from '../validations/expresiones.mjs';
 import * as alert from '../validations/alertas.mjs';
 
-const url = 'https://backend-valhalla.onrender.com/ruta/usuarios';
+const url = 'http://localhost:8289/api/registrofincas';
 
-const listarUsuarios = async () => {
+const listarFincas = async () => {
     const tabla = $('#dataTable').DataTable({
 
         "bProcessing": true, // Habilita la pantalla de carga
@@ -12,10 +12,10 @@ const listarUsuarios = async () => {
 
         "columns": [
             { "data": "index" }, // Índice autoincremental
-            { "data": "username" },
-            { "data": "correo" },
-            { "data": "rol" },
-            { "data": "fecha_registro" }, // Fecha de registro
+            { "data": "nombre" },
+            { "data": "valor" },
+            { "data": "area" },
+            { "data": "cultivos" }, // Fecha de registro
             { "data": "estado" },
             { "data": "botones_accion"}
         ],
@@ -29,33 +29,33 @@ const listarUsuarios = async () => {
     })
         .then((resp) => resp.json())
         .then(function (data) {
-            const listaUsuarios = data.usuarios;
+            const listaFincas = data.usuarios;
 
             // Agregar un índice autoincremental y fecha de registro a los datos
-            listaUsuarios.forEach((usuario, index) => {
-                usuario.index = index + 1;
-                usuario.fecha_registro = new Date().toLocaleDateString('es-ES');
-                if (usuario.estado) {
-                    usuario.estado =`<i class="fas fa-toggle-on fa-2x text-success" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
+            listaFincas.forEach((finca, index) => {
+                finca.index = index + 1;
+                finca.fecha_registro = new Date().toLocaleDateString('es-ES');
+                if (finca.estado) {
+                    finca.estado =`<i class="fas fa-toggle-on fa-2x text-success" id="cambiar-estado" data-index="${finca._id}" data-estado="${finca.estado}"></i>`;
                 } else {
-                    usuario.estado =`<i class="fas fa-toggle-on fa-rotate-180 fa-2x text-danger" id="cambiar-estado" data-index="${usuario._id}" data-estado="${usuario.estado}"></i>`;
+                    finca.estado =`<i class="fas fa-toggle-on fa-rotate-180 fa-2x text-danger" id="cambiar-estado" data-index="${finca._id}" data-estado="${finca.estado}"></i>`;
                 }
 
                 usuario.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
-                        <a href="#" class="btn btn-primary" id="btnUpdate" data-index="${usuario._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger" id="btnDelete" data-index="${usuario._id}"><i class="fas fa-trash-alt"></i></a>
-                        <a href="#" class="btn btn-warning" id="btnVer" data-index="${usuario._id}" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
+                        <a href="#" class="btn btn-primary" id="btnUpdate" data-index="${finca._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit"></i></a>
+                        <a href="#" class="btn btn-danger" id="btnDelete" data-index="${finca._id}"><i class="fas fa-trash-alt"></i></a>
+                        <a href="#" class="btn btn-warning" id="btnVer" data-index="${finca._id}" data-toggle="modal" data-target="#ShowModal"><i class="fas fa-eye"></i></a>
                     </div>
                 `;
             });
 
             tabla.clear().draw();
-            tabla.rows.add(listaUsuarios).draw();
+            tabla.rows.add(listaFincas).draw();
 
             // Evento Cambiar de Estado
             tabla.on('click', '#cambiar-estado', function () {              
-                const userId = this.getAttribute('data-index');
+                const fincaId = this.getAttribute('data-index');
                 let currentEstado = this.getAttribute('data-estado'); // Obtiene el atributo como cadena
 
                 // Compara la cadena con "true"
@@ -70,30 +70,30 @@ const listarUsuarios = async () => {
                 }
             
                 this.setAttribute('data-estado', currentEstado); // Actualiza el atributo data-estado
-                cambiarEstado(userId, currentEstado);
+                cambiarEstado(fincaId, currentEstado);
             });
             
             // Evento Borrar Datos Usuarios
             tabla.on('click', '#btnDelete', function () {
                 const button = this
-                const userID = button.getAttribute('data-index');
-                eliminarUsuarios(userID)
+                const fincaID = button.getAttribute('data-index');
+                eliminarFincas(fincaID)
             })
 
             // Evento Modificar Datos Usuarios
             tabla.on('click', '#btnUpdate', function () {
                 const button = this
-                const userID = button.getAttribute('data-index');
+                const fincaID = button.getAttribute('data-index');
                 document.getElementById('formModificar').reset() 
-                verModalUsuarios(userID)
+                verModalFincas(fincaID)
             })
 
             // Evento Ver Datos Usuarios
             tabla.on('click', '#btnVer', function () {
                 const button = this
-                const userID = button.getAttribute('data-index');
+                const fincaID = button.getAttribute('data-index');
                 document.getElementById('formModificar').reset()
-                verUsuarios(userID)
+                verFincas(fincaID)
             })
         })
         .catch(function (error) {
@@ -102,17 +102,17 @@ const listarUsuarios = async () => {
 }
 
 // Función para cambiar el estado del usuario
-function cambiarEstado(userId, newEstado) {
+function cambiarEstado(fincaId, newEstado) {
 
-    const usuarios = {
-        _id: userId,
+    const fincas = {
+        _id: fincaId,
         estado:newEstado,
     };
 
     fetch(url, {
         method: 'PUT',
         mode: 'cors',
-        body: JSON.stringify(usuarios),
+        body: JSON.stringify(fincas),
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
     })
 }    
@@ -120,7 +120,7 @@ function cambiarEstado(userId, newEstado) {
 // 
 
 // -------------------------------------------------
-const eliminarUsuarios = (id) => {
+const eliminarFincas = (id) => {
 
     Swal.fire({
         title: '¿Está seguro de realizar la eliminación?',
@@ -145,7 +145,7 @@ const eliminarUsuarios = (id) => {
                 Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: '¡Usuario Eliminado Exitosamente!',
+                title: '¡Registro de Finca Eliminado Exitosamente!',
                 text: json.msg,
                 showConfirmButton: false,
                 timer: 1500
@@ -157,7 +157,7 @@ const eliminarUsuarios = (id) => {
             })
             .catch((error) => {
                 console.error('Error:', error);
-                Swal.fire('Error', 'Se produjo un error al eliminar el usuario.', 'error');
+                Swal.fire('Error', 'Se produjo un error al eliminar el registro de la finca.', 'error');
             });
         }
     });
@@ -165,23 +165,22 @@ const eliminarUsuarios = (id) => {
 
 // ================================================================
 
-const verModalUsuarios = async (usuario) => {
+const verModalFincas = async (finca) => {
 
-    await fetch(url+`/${usuario}`, {
+    await fetch(url+`/${finca}`, {
         method: 'GET',
         mode: 'cors',
         headers: { "Content-type": "application/json; charset=UTF-8" }
     })
     .then((resp) => resp.json())
     .then((data) => {
-        const usuario = data.usuarioID; 
-        console.log(usuario)
-        document.getElementById('txtID').value = usuario._id;
-        document.getElementById('txtNombres').value = usuario.nombres;
-        document.getElementById('txtApellidos').value = usuario.apellidos;
-        document.getElementById('txtUsername').value = usuario.username;
-        document.getElementById('txtCorreo').value = usuario.correo;
-        document.getElementById('selRol').value = usuario.rol;
+        const finca = data.fincaID; 
+        console.log(finca)
+        document.getElementById('txtID').value = finca._id;
+        document.getElementById('txtNombre').value = finca.nombres;
+        document.getElementById('txtArea').value = finca.apellidos;
+        document.getElementById('txtValor').value = finca.Valor;
+        document.getElementById('txtCultivos').value = finca.Cultivos;
     })
     .catch((error) => {
         console.log('Error: ', error);
@@ -190,167 +189,89 @@ const verModalUsuarios = async (usuario) => {
 
 // ==============================================================
 
-const crearUsuarios = async () => {
+const registrarFincas = async () => {
 
     const campos = [
         {   
-            id: 'txtNombres',
+            id: 'txtNombre',
             label: 'Nombre',
             msg: 'el campo debe contener solo letras o caracteres.',
             validacion: valid.validarNombre 
         },
         { 
-            id: 'txtApellidos',
-            label: 'Apellido',
+            id: 'txtArea',
+            label: 'Area',
             msg: 'el campo debe contener solo letras o caracteres.', 
-            validacion: valid.validarApellido 
+            validacion: valid.validarArea
         },
         { 
-            id: 'txtCorreo', 
-            label: 'Correo', 
-            msg: 'el campo debe tener un formato con un "@" y un dominio correcto.', 
-            validacion: valid.validarCorreo 
+            id: 'txtValor', 
+            label: 'Valor', 
+            msg: 'el campo debe tener solo caracteres numéricos.', 
+            validacion: valid.validarValor 
         },
         { 
-            id: 'txtUsername', 
-            label: 'Username', 
-            msg: 'el campo debe contener entre 3 y 16 caracteres, que pueden ser letras, números o guiones bajos.', 
-            validacion: valid.validarUsername
+            id: 'txtCultivos', 
+            label: 'Cultivos', 
+            msg: 'el campo debe contener solo letras o caracteres.', 
+            validacion: valid.validarCultivos
         },
-        { id: 'selRol', label: 'Rol'},
-        { 
-            id: 'txtPassword', 
-            label: 'Contraseña', 
-            msg: 'el campo debe contener al menos 8 caracteres, incluyendo mayúsculas y números.', 
-            validacion: valid.validarPassword
-        },
-        { 
-            id: 'txtPasswordRepeat', 
-            label: 'Confirmar Contraseña', 
-            msg: 'el campo debe contener al menos 8 caracteres, incluyendo mayúsculas y números.', 
-            validacion: valid.validarPassword 
-        }
+
     ];
 
     if (!alert.validarCampos(campos)) {
         return;
     }
-
-    const txtPassword = document.getElementById('txtPassword').value;
-    const txtPasswordRepeat = document.getElementById('txtPasswordRepeat').value;
-
-    if (txtPassword !== txtPasswordRepeat) {
-
-        Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: '¡Error Registro!',
-            text: 'Las Contraseñas ingresadas no coinciden',
-            showConfirmButton: false,
-            timer: 1500
-        })
-        return;
-    }else{
-        
-        const usuario = {
-            nombres: document.getElementById('txtNombres').value,
-            apellidos: document.getElementById('txtApellidos').value,
-            username: document.getElementById('txtUsername').value,
-            correo: document.getElementById('txtCorreo').value,
-            /* telefono: document.getElementById('txtTelefono').value, */
-            rol: document.getElementById('selRol').value,
-            password: txtPassword
-        };
-
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(usuario),
-            headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        })
-            .then((resp) => resp.json())
-            .then((json) => {
-                if (json.msg) {
-
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: '¡Registro Exitoso!',
-                        text: json.msg,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    setTimeout(() => {
-                        window.location.href = '/listarUsuarios';
-                    }, 2000);
-                }
-            })
-            .catch((error) => {
-                
-                console.error('Error al registrar usuario:', error);
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: '¡Error al Registrar Usuario!',
-                    text: 'No se pudo procesar la solicitud, Inténtelo nuevamente.',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                window.location.reload();
-            });
-    }
-
 }
 
 // ============================================================
 
-const modificarUsuarios = async () => {
+const modificarFincas = async () => {
 
     const campos = [
         {   
-            id: 'txtNombres',
+            id: 'txtNombre',
             label: 'Nombre',
             msg: 'el campo debe contener solo letras o caracteres.',
             validacion: valid.validarNombre 
         },
         { 
-            id: 'txtApellidos',
-            label: 'Apellido',
+            id: 'txtArea',
+            label: 'Area',
             msg: 'el campo debe contener solo letras o caracteres.', 
-            validacion: valid.validarApellido 
+            validacion: valid.validarArea
         },
         { 
-            id: 'txtCorreo', 
-            label: 'Correo', 
-            msg: 'el campo debe tener un formato con un "@" y un dominio correcto.', 
-            validacion: valid.validarCorreo 
+            id: 'txtValor', 
+            label: 'Valor', 
+            msg: 'el campo debe tener solo caracteres numéricos.', 
+            validacion: valid.validarValor 
         },
         { 
-            id: 'txtUsername', 
-            label: 'Username', 
-            msg: 'el campo debe contener entre 3 y 16 caracteres, que pueden ser letras, números o guiones bajos.', 
-            validacion: valid.validarUsername
+            id: 'txtCultivos', 
+            label: 'Cultivos', 
+            msg: 'el campo debe contener solo letras o caracteres.', 
+            validacion: valid.validarCultivos
         },
-        { id: 'selRol', label: 'Rol'},
+
     ];
 
     if (!alert.validarCampos(campos)) {
         return;
     }else{
         
-        const usuarios = {
+        const fincas = {
             _id: document.getElementById('txtID').value,
-            nombres: document.getElementById('txtNombres').value,
-            apellidos: document.getElementById('txtApellidos').value,
-            username: document.getElementById('txtUsername').value, 
-            correo: document.getElementById('txtCorreo').value, 
-            rol: document.getElementById('selRol').value
+            nombre: document.getElementById('txtNombre').value,
+            area: document.getElementById('txtArea').value,
+            valor: document.getElementById('txtValor').value, 
+            cultivos: document.getElementById('txtCultivos').value, 
         };
 
         fetch(url, {
             method: 'PUT',
             mode: 'cors',
-            body: JSON.stringify(usuarios),
+            body: JSON.stringify(fincas),
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
         })
             .then((resp) => resp.json())
@@ -366,17 +287,17 @@ const modificarUsuarios = async () => {
                         timer: 1500
                     })
                     setTimeout(() => {
-                        window.location.href = '/listarUsuarios';
+                        window.location.href = '/listarFincas';
                     }, 2000);
                 }
             })
             .catch((error) => {
                 
-                console.error('Error al registrar usuario:', error);
+                console.error('Error al registrar finca', error);
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
-                    title: '¡Error al Modificar Usuario!',
+                    title: '¡Error al Modificar el Registro de la Finca!',
                     text: 'No se pudo procesar la solicitud, Inténtelo nuevamente.',
                     showConfirmButton: false,
                     timer: 1500
@@ -387,24 +308,23 @@ const modificarUsuarios = async () => {
 
 }
 
-const verUsuarios = async (idUsuario) => {
+const verFinca = async (idFinca) => {
 
-    await fetch(url+`/${idUsuario}`, {
+    await fetch(url+`/${idFinca}`, {
         method: 'GET',
         mode: 'cors',
         headers: {'Content-type': "aplication/json; charset=UTF-8"}
     })
     .then((resp) => resp.json())
     .then((data) => {
-        const usuario = data.usuarioID;
-        console.log(usuario)
+        const finca = data.fincaID;
+        console.log(finca)
   
         /* document.getElementById('txtID').value = usuario._id; */
-        document.getElementById('txtVerNombres').textContent = usuario.nombres;
-        document.getElementById('txtVerApellidos').textContent = usuario.apellidos;
-        document.getElementById('txtVerUsername').textContent = usuario.username;
-        document.getElementById('txtVerCorreo').textContent = usuario.correo;
-        document.getElementById('selVerRol').textContent = usuario.rol;
+        document.getElementById('txtVerNombre').textContent = finca.nombre;
+        document.getElementById('txtVerArea').textContent = finca.area;
+        document.getElementById('txtVerValor').textContent = finca.valor;
+        document.getElementById('txtVerCultivos').textContent = finca.cultivos;
 
     })
     .catch((error) => {
@@ -418,9 +338,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const PageUrl = window.location.href;
 
-    // Verificar si la URL contiene "listarusuarios"
-    if (PageUrl.includes("/listarUsuarios")) {
-        listarUsuarios();
+    // Verificar si la URL contiene "listarfincas   "
+    if (PageUrl.includes("/listarFincas")) {
+        listarFincas();
 
         document.getElementById('btnMdReset').
         addEventListener('click', () => {
@@ -429,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         document.getElementById('btnMdGuardar').
         addEventListener('click', () => {
-            modificarUsuarios()
+            modificarFincas()
         })
 
 
@@ -439,7 +359,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
             Swal.fire({
                 title: '¿Estas Seguro?',
-                text: 'Se generar un reporte de los usuarios',
+                text: 'Se genera un reporte de las fincas',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Generar',
@@ -461,11 +381,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    if(PageUrl.includes("/crearUsuario")){
+    if(PageUrl.includes("/registrarFinca")){
 
         document.getElementById('btnGuardar').
         addEventListener('click', () => {
-            crearUsuarios();
+            registrarFincas();
         })
 
         document.getElementById('btnReset').
@@ -480,7 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
             Swal.fire({
                 title: '¿Estas Seguro?',
-                text: 'No se registrará ningún Usuario',
+                text: 'No se registrará ninguna Finca',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Salir',
@@ -488,7 +408,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }).then((result) => {
                 if (result.isConfirmed) {
                     setTimeout(() => {
-                        window.location.href = '/listarUsuarios';
+                        window.location.href = '/listarFincas';
                     }, 1800);
                 }
             });

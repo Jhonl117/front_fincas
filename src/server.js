@@ -13,7 +13,7 @@ const app = express();
 // ================================= \\
 // Configuracion Express
 
-app.set('port', process.env.PORT || 8181);
+app.set('port', process.env.PORT || 8182);
 app.set('views', path.join(__dirname, 'views'))
 app.engine('.hbs', exphbs.engine({
     defaultLayout: 'main',

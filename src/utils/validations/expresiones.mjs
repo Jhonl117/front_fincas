@@ -1,7 +1,22 @@
-
-export const validarNombre = (nombre) => {
+export const validarNombre = (nombre) => { 
     const result = /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s]+$/;
     return result.test(nombre)
+}
+
+
+export const validarArea = (area) => { 
+    const result = /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s]+$/;
+    return result.test(area)
+}
+
+export const validarValor = (valor) => { 
+    const result = /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s]+$/;
+    return result.test(valor)
+}
+
+export const validarCultivos = (cultivos) => { 
+    const result = /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s]+$/;
+    return result.test(cultivos)
 }
 
 export const validarApellido = (apellido) => {

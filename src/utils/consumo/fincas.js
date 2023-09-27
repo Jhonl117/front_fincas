@@ -2,7 +2,7 @@
 import * as valid from '../validations/expresiones.mjs';
 import * as alert from '../validations/alertas.mjs';
 
-const url = 'http://localhost:8289/api/registrofincas';
+const url = 'https://api-backend-f.onrender.com/api/registrofincas';
 
 const listarFincas = async () => {
     const tabla = $('#dataTable').DataTable({
@@ -29,7 +29,7 @@ const listarFincas = async () => {
     })
         .then((resp) => resp.json())
         .then(function (data) {
-            const listaFincas = data.usuarios;
+            const listaFincas = data.fincas;
 
             // Agregar un índice autoincremental y fecha de registro a los datos
             listaFincas.forEach((finca, index) => {
@@ -41,7 +41,7 @@ const listarFincas = async () => {
                     finca.estado =`<i class="fas fa-toggle-on fa-rotate-180 fa-2x text-danger" id="cambiar-estado" data-index="${finca._id}" data-estado="${finca.estado}"></i>`;
                 }
 
-                usuario.botones_accion = `
+                fincas.botones_accion = `
                     <div class="text-center d-flex justify-content-around">
                         <a href="#" class="btn btn-primary" id="btnUpdate" data-index="${finca._id}" data-toggle="modal" data-target="#UpdateModal"><i class="fas fa-edit"></i></a>
                         <a href="#" class="btn btn-danger" id="btnDelete" data-index="${finca._id}"><i class="fas fa-trash-alt"></i></a>
@@ -73,14 +73,14 @@ const listarFincas = async () => {
                 cambiarEstado(fincaId, currentEstado);
             });
             
-            // Evento Borrar Datos Usuarios
+            // Evento Borrar Datos Fincas
             tabla.on('click', '#btnDelete', function () {
                 const button = this
                 const fincaID = button.getAttribute('data-index');
                 eliminarFincas(fincaID)
             })
 
-            // Evento Modificar Datos Usuarios
+            // Evento Modificar Datos Fincas
             tabla.on('click', '#btnUpdate', function () {
                 const button = this
                 const fincaID = button.getAttribute('data-index');
@@ -88,7 +88,7 @@ const listarFincas = async () => {
                 verModalFincas(fincaID)
             })
 
-            // Evento Ver Datos Usuarios
+            // Evento Ver Datos Fincas
             tabla.on('click', '#btnVer', function () {
                 const button = this
                 const fincaID = button.getAttribute('data-index');
@@ -131,13 +131,13 @@ const eliminarFincas = (id) => {
         cancelButtonText: 'Cancelar',
     }).then((result) => {
         if (result.isConfirmed) {
-            let usuario = {
+            let finca = {
                 _id: id,
             };
             fetch(url, {
                 method: 'DELETE',
                 mode: 'cors',
-                body: JSON.stringify(usuario),
+                body: JSON.stringify(finca),
                 headers: { 'Content-type': 'application/json; charset=UTF-8' },
             })
             .then((resp) => resp.json())
@@ -308,7 +308,7 @@ const modificarFincas = async () => {
 
 }
 
-const verFinca = async (idFinca) => {
+const verFincas = async (idFinca) => {
 
     await fetch(url+`/${idFinca}`, {
         method: 'GET',
@@ -320,7 +320,7 @@ const verFinca = async (idFinca) => {
         const finca = data.fincaID;
         console.log(finca)
   
-        /* document.getElementById('txtID').value = usuario._id; */
+        /* document.getElementById('txtID').value = finca._id; */
         document.getElementById('txtVerNombre').textContent = finca.nombre;
         document.getElementById('txtVerArea').textContent = finca.area;
         document.getElementById('txtVerValor').textContent = finca.valor;
@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    if(PageUrl.includes("/registrarFinca")){
+    if(PageUrl.includes("/registrarFincas")){
 
         document.getElementById('btnGuardar').
         addEventListener('click', () => {
